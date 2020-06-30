@@ -1,5 +1,6 @@
 ﻿using Domain.Repositorios;
 using Domain.Tipos;
+using Domain.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace Data.Mock.Repositorios
             _data = data;
         }
 
-        void IRepository.Commit()
+        void IUnitOfWork.Commit()
         {
             return;
         }

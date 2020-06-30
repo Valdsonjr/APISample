@@ -58,6 +58,10 @@
         <member name="T:Domain.Repositorios.IItemRepository">
             <summary>
             Repositório de itens
+            
+            PS: como só existe um repositório não há problema de colocar ele como unidade de trabalho,
+            mas caso você tenha mais de um repositório usando o mesmo contexto de banco é bom criar uma classe agregadora
+            que implementa a interface IUnitOfWork
             </summary>
         </member>
         <member name="M:Domain.Repositorios.IItemRepository.ObterTodos">
@@ -94,17 +98,6 @@
             <param name="item"></param>
             <returns></returns>
         </member>
-        <member name="T:Domain.Repositorios.IRepository">
-            <summary>
-            Interface genérica de repositórios
-            </summary>
-        </member>
-        <member name="M:Domain.Repositorios.IRepository.Commit">
-            <summary>
-            "Salva a transação", note que essa operação pode significar coisas bem diferentes para repositórios diferentes
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Domain.Tipos.Item">
             <summary>
             Item de teste da api
@@ -124,6 +117,19 @@
             <summary>
             Data de criação do item
             </summary>
+        </member>
+        <member name="T:Domain.UnitOfWork.IUnitOfWork">
+            <summary>
+            Interface genérica de unidades de trabalho
+            
+            Uma unidade de trabalho serve para controlar transações dentro de um contexto
+            </summary>
+        </member>
+        <member name="M:Domain.UnitOfWork.IUnitOfWork.Commit">
+            <summary>
+            "Salva a transação", note que essa operação pode significar coisas bem diferentes para repositórios diferentes
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Domain.Validadores.ItemValidator">
             <summary>

@@ -3,6 +3,7 @@ using Domain.Tipos;
 using Domain.Repositorios;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Domain.UnitOfWork;
 
 namespace Data.EFCore.Repositorios
 {
@@ -20,7 +21,7 @@ namespace Data.EFCore.Repositorios
             return true;
         } 
 
-        void IRepository.Commit()
+        void IUnitOfWork.Commit()
             => context.SaveChanges();
 
         bool IItemRepository.Inserir(Item item)
