@@ -1,5 +1,4 @@
 ﻿using Domain.Recursos;
-using Domain.Repositorios;
 using Domain.Tipos;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
@@ -34,21 +33,6 @@ namespace Domain.Validadores
                                  .MaximumLength(ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
 
             RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
-        }
-    }
-
-    /// <summary>
-    /// Validação de inserção de item
-    /// </summary>
-    public class PostItemValidator : ItemValidator
-    {
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        public PostItemValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository) : base (localizer)
-        {
-            RuleFor(i => i.Key).Must(i => repository.ObterPorId(i) == null)
-                               .WithMessage(localizer["ItemErrorAlreadyExists"]);
         }
     }
 }
