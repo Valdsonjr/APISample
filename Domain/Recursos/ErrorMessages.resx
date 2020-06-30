@@ -132,9 +132,6 @@
   <data name="ItemErrorKeyMaxSize" xml:space="preserve">
     <value>Chave muito grande</value>
   </data>
-  <data name="ItemErrorNotFount" xml:space="preserve">
-    <value>Item não encontrado</value>
-  </data>
   <data name="ItemErrorValueMaxSize" xml:space="preserve">
     <value>Valor muito grande</value>
   </data>

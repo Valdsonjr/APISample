@@ -45,11 +45,6 @@
               Consulta uma cadeia de caracteres localizada semelhante a Chave muito grande.
             </summary>
         </member>
-        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorNotFount">
-            <summary>
-              Consulta uma cadeia de caracteres localizada semelhante a Item não encontrado.
-            </summary>
-        </member>
         <member name="P:Domain.Recursos.ErrorMessages.ItemErrorValueMaxSize">
             <summary>
               Consulta uma cadeia de caracteres localizada semelhante a Valor muito grande.

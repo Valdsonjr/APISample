@@ -73,10 +73,10 @@ namespace V0.Api.Controllers
         /// </summary>
         /// <param name="item"></param>
         /// <response code="201">Item cadastrado</response>
-        /// <response code="409">Lista de erros de validação</response>
+        /// <response code="400">Lista de erros de validação</response>
         [HttpPost]
         [ProducesResponseType(typeof(Item), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedAtActionResult Post([Validator(typeof(PostItemValidator))] Item item)
         {
             _logger.LogTrace("ItemController.Post({dto}) : ENTRYPOINT", item);
@@ -112,11 +112,11 @@ namespace V0.Api.Controllers
         /// <param name="key">chave do item para ser alterado</param>
         /// <param name="patches">alterações</param>
         /// <response code="200">Item alterado com sucesso</response>
-        /// <response code="409">Erros de validação</response>
+        /// <response code="400">Erros de validação</response>
         /// <response code="404">Item não encontrado</response>
         [HttpPatch("{key}")]
         [ProducesResponseType(typeof(Item), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult Patch(string key, [FromBody] JsonPatchDocument<Item> patches)
         {
@@ -131,7 +131,7 @@ namespace V0.Api.Controllers
             var validation = _validator.Validate(item);
 
             if (!validation.IsValid)
-                return new ConflictObjectResult(validation);
+                return BadRequest(validation);
 
             _service.Alterar(item);
 

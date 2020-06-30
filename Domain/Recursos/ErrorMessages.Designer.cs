@@ -106,15 +106,6 @@ namespace Domain.Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Item não encontrado.
-        /// </summary>
-        public static string ItemErrorNotFount {
-            get {
-                return ResourceManager.GetString("ItemErrorNotFount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Valor muito grande.
         /// </summary>
         public static string ItemErrorValueMaxSize {
