@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Domain.Recursos.ErrorMessages">
+            <summary>
+              Uma classe de recurso de tipo de alta segurança, para pesquisar cadeias de caracteres localizadas etc.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ResourceManager">
+            <summary>
+              Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.Culture">
+            <summary>
+              Substitui a propriedade CurrentUICulture do thread atual para todas as
+              pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorAlreadyExists">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Essa chave já existe.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorEmptyKey">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Chave não pode ser vazia.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorEmptyValue">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Valor não pode ser vazio.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorInvalidDate">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Data inválida.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorKeyMaxSize">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Chave muito grande.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorNotFount">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Item não encontrado.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.ItemErrorValueMaxSize">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Valor muito grande.
+            </summary>
+        </member>
+        <member name="P:Domain.Recursos.ErrorMessages.UnexpectedError">
+            <summary>
+              Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, por favor tente novamente. Se o erro persistir, entre em contato com o administrador do sistema..
+            </summary>
+        </member>
+        <member name="T:Domain.Repositorios.IItemRepository">
+            <summary>
+            Repositório de itens
+            </summary>
+        </member>
+        <member name="M:Domain.Repositorios.IItemRepository.ObterTodos">
+            <summary>
+            Obtém todos os itens cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Domain.Repositorios.IItemRepository.ObterPorId(System.String)">
+            <summary>
+            Tenta obter um item através de sua chave
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Domain.Repositorios.IItemRepository.Inserir(Domain.Tipos.Item)">
+            <summary>
+            Tenta inserir um item
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Domain.Repositorios.IItemRepository.Remover(System.String)">
+            <summary>
+            Tenta deletar um item
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Domain.Repositorios.IItemRepository.Alterar(Domain.Tipos.Item)">
+            <summary>
+            Tenta alterar um item
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Domain.Repositorios.IRepository">
+            <summary>
+            Interface genérica de repositórios
+            </summary>
+        </member>
+        <member name="M:Domain.Repositorios.IRepository.Commit">
+            <summary>
+            "Salva a transação", note que essa operação pode significar coisas bem diferentes para repositórios diferentes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Domain.Tipos.Item">
+            <summary>
+            Item de teste da api
+            </summary>
+        </member>
+        <member name="P:Domain.Tipos.Item.Key">
+            <summary>
+            Chave de identificação do item
+            </summary>
+        </member>
+        <member name="P:Domain.Tipos.Item.Value">
+            <summary>
+            Texto do item
+            </summary>
+        </member>
+        <member name="P:Domain.Tipos.Item.CreationDate">
+            <summary>
+            Data de criação do item
+            </summary>
+        </member>
+        <member name="T:Domain.Validadores.ItemValidator">
+            <summary>
+            Validador de itens
+            </summary>
+        </member>
+        <member name="F:Domain.Validadores.ItemValidator.KeyMaxLength">
+            <summary>
+            Tamanho máximo de uma chave
+            </summary>
+        </member>
+        <member name="F:Domain.Validadores.ItemValidator.ValueMaxLength">
+            <summary>
+            Tamanho máximo de um valor
+            </summary>
+        </member>
+        <member name="M:Domain.Validadores.ItemValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Recursos.ErrorMessages})">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Domain.Validadores.PostItemValidator">
+            <summary>
+            Validação de inserção de item
+            </summary>
+        </member>
+        <member name="M:Domain.Validadores.PostItemValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Recursos.ErrorMessages},Domain.Repositorios.IItemRepository)">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+    </members>
+</doc>

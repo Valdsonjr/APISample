@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Api</name>
+    </assembly>
+    <members>
+        <member name="T:Api.ConfigureSwaggerOptions">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+        </member>
+        <member name="M:Api.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Api.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        </member>
+        <member name="M:Api.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Api.Extensions.DevelopmentExtensions">
+            <summary>
+            Classe de extensões específicas para ambiente de desenvolvimento
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.DevelopmentExtensions.AddDevelopmentServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona os repositórios de mock na injeção de dependência
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Api.Extensions.ServicesExtensions">
+            <summary>
+            Extensões de serviços
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.ServicesExtensions.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona os serviços na injeção de dependência
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Api.Extensions.StagingExtensions">
+            <summary>
+            Classe de extensões específicas para ambiente de staging
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.StagingExtensions.AddStagingServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona os repositórios na injeção de dependência
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Api.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:Api.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+        <member name="T:V0.Api.Controllers.ItemController">
+            <summary>
+            Itens
+            </summary>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.#ctor(Microsoft.Extensions.Logging.ILogger{V0.Api.Controllers.ItemController},Services.ItemService,Domain.Validadores.ItemValidator)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="logger"></param>
+            <param name="service"></param>
+            <param name="validator"></param>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.Get(System.String)">
+            <summary>
+            Obtém um item pela chave
+            </summary>
+            <param name="key">chave de identificação do item</param>
+            <response code="200">Item com a chave especificada</response>
+            <response code="404">Item não encontrado</response>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.GetAll">
+            <summary>
+            Obtém todos os itens cadastrados
+            </summary>
+            <response code="200">Todos os itens cadastrados</response>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.Post(Domain.Tipos.Item)">
+            <summary>
+            Insere um novo item
+            </summary>
+            <param name="item"></param>
+            <response code="201">Item cadastrado</response>
+            <response code="409">Lista de erros de validação</response>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.Delete(System.String)">
+            <summary>
+            Remove um item
+            </summary>
+            <param name="key">chave do item para ser removido</param>
+        </member>
+        <member name="M:V0.Api.Controllers.ItemController.Patch(System.String,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Domain.Tipos.Item})">
+            <summary>
+            Atualiza um item
+            </summary>
+            <param name="key">chave do item para ser alterado</param>
+            <param name="patches">alterações</param>
+            <response code="200">Item alterado com sucesso</response>
+            <response code="409">Erros de validação</response>
+            <response code="404">Item não encontrado</response>
+        </member>
+    </members>
+</doc>
