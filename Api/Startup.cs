@@ -1,5 +1,4 @@
 using Api.Extensions;
-using Domain.Recursos;
 using Domain.Validadores;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
@@ -23,7 +21,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Api
 {
@@ -39,6 +37,11 @@ namespace Api
             Environment = env;
         }
 
+        /* JSONPatch ainda usa o newtonsoft e não sabemos quando vai deixar de usar, vide:
+         * https://github.com/dotnet/aspnetcore/issues/16968
+         * mas assim que possível, remover essa função e o .AddNewtonsoftJson()
+         * lá embaixo.
+        */ 
         private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
         {
             var builder = new ServiceCollection()
@@ -102,9 +105,10 @@ namespace Api
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerDefaultValues>();
+                c.OperationFilter<SwaggerLanguageHeader>();
                 var apiXML = Path.Combine(AppContext.BaseDirectory, $"Api.xml");
                 var domainXML = Path.Combine(AppContext.BaseDirectory, $"Domain.xml");
-                c.IncludeXmlComments(apiXML);
+                c.IncludeXmlComments(apiXML, true);
                 c.AddFluentValidationRules();
             });
         }
@@ -112,7 +116,6 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
                               ILogger<Startup> logger, 
-                              IStringLocalizer<ErrorMessages> localizer, 
                               IApiVersionDescriptionProvider provider)
         {
             if (Environment.IsDevelopment())
@@ -126,9 +129,8 @@ namespace Api
                 app.UseExceptionHandler(options => options.Run(async context =>
                 {
                     logger.LogError(context.Features.Get<IExceptionHandlerPathFeature>().Error.Message);
-                    context.Response.ContentType = "application/json";
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    await context.Response.WriteAsync(JsonSerializer.Serialize(new List<string> { localizer["UnexpectedError"] }));
+                    await Task.CompletedTask;
                 }));
             }
 

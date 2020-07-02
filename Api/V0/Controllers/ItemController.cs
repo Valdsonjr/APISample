@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
+using System;
 using System.Collections.Generic;
 
 namespace V0.Api.Controllers
 {
     /// <summary>
-    /// Itens
+    /// Requisições de gerenciamento de itens
     /// </summary>
     [ApiController]
     [ApiVersion("0.1")]

@@ -43,16 +43,16 @@ namespace Api
         {
             var info = new OpenApiInfo()
             {
-                Title = "Sample API",
+                Title = "Minha API",
                 Version = description.ApiVersion.ToString(),
-                Description = "A sample application with Swagger, Swashbuckle, and API versioning.",
+                Description = "Um exemplo de API com Swagger, Swashbuckle, JSONPatch, versionamento e localização.",
                 Contact = new OpenApiContact() { Name = "Valdson Francisco" },
                 License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             };
 
             if (description.IsDeprecated)
             {
-                info.Description += " This API version has been deprecated.";
+                info.Description += " Esta versão da API está obsoleta";
             }
 
             return info;

@@ -69,7 +69,7 @@
         </member>
         <member name="T:V0.Api.Controllers.ItemController">
             <summary>
-            Itens
+            Requisições de gerenciamento de itens
             </summary>
         </member>
         <member name="M:V0.Api.Controllers.ItemController.#ctor(Microsoft.Extensions.Logging.ILogger{V0.Api.Controllers.ItemController},Services.ItemService,Domain.Validadores.ItemValidator)">
