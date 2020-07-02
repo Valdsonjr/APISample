@@ -63,7 +63,6 @@ namespace V0.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Item>), StatusCodes.Status200OK)]
         public IEnumerable<Item> GetAll()
         {
-            throw new ArgumentException("teste");
             _logger.LogTrace("ItemController.GetAll() : ENTRYPOINT");
             var result = _service.ObterTodos();
             _logger.LogTrace("ItemController.GetAll() : EXITPOINT - SUCCESS");
