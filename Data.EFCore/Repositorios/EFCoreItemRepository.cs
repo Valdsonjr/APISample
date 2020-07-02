@@ -33,10 +33,10 @@ namespace Data.EFCore.Repositorios
             return i == null;
         }
 
-        Item? IItemRepository.ObterPorId(string key)
+        Item? IItemRepository.Obter(string key)
             => context.Find<Item>(key);
 
-        IQueryable<Item> IItemRepository.ObterTodos()
+        IQueryable<Item> IItemRepository.Obter()
             => context.Items;
 
         bool IItemRepository.Remover(string key)

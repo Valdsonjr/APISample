@@ -113,14 +113,5 @@ namespace Domain.Recursos {
                 return ResourceManager.GetString("ItemErrorValueMaxSize", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, por favor tente novamente. Se o erro persistir, entre em contato com o administrador do sistema..
-        /// </summary>
-        public static string UnexpectedError {
-            get {
-                return ResourceManager.GetString("UnexpectedError", resourceCulture);
-            }
-        }
     }
 }

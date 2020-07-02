@@ -135,7 +135,4 @@
   <data name="ItemErrorValueMaxSize" xml:space="preserve">
     <value>Value is too large</value>
   </data>
-  <data name="UnexpectedError" xml:space="preserve">
-    <value>An unexpected error ocurred, please try again. If the error persists then reach out for one of our system admins</value>
-  </data>
 </root>

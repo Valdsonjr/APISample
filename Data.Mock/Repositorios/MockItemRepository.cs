@@ -35,10 +35,10 @@ namespace Data.Mock.Repositorios
         bool IItemRepository.Inserir(Item item)
             => !_data.Exists(i => i.Key == item.Key);
 
-        Item? IItemRepository.ObterPorId(string key)
+        Item? IItemRepository.Obter(string key)
             => _data.Find(i => i.Key == key);
 
-        IQueryable<Item> IItemRepository.ObterTodos()
+        IQueryable<Item> IItemRepository.Obter()
             => _data.AsQueryable();
 
         bool IItemRepository.Remover(string key)

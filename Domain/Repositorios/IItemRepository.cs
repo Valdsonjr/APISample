@@ -18,13 +18,13 @@ namespace Domain.Repositorios
         /// Obtém todos os itens cadastrados
         /// </summary>
         /// <returns></returns>
-        IQueryable<Item> ObterTodos();
+        IQueryable<Item> Obter();
         /// <summary>
         /// Tenta obter um item através de sua chave
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Item? ObterPorId(String key);
+        Item? Obter(String key);
         /// <summary>
         /// Tenta inserir um item
         /// </summary>

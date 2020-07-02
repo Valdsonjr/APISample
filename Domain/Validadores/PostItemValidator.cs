@@ -15,7 +15,7 @@ namespace Domain.Validadores
         /// </summary>
         public PostItemValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository) : base(localizer)
         {
-            RuleFor(i => i.Key).Must(i => repository.ObterPorId(i) == null)
+            RuleFor(i => i.Key).Must(i => repository.Obter(i) == null)
                                .WithMessage(localizer["ItemErrorAlreadyExists"]);
         }
     }

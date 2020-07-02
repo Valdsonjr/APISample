@@ -50,11 +50,6 @@
               Consulta uma cadeia de caracteres localizada semelhante a Valor muito grande.
             </summary>
         </member>
-        <member name="P:Domain.Recursos.ErrorMessages.UnexpectedError">
-            <summary>
-              Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, por favor tente novamente. Se o erro persistir, entre em contato com o administrador do sistema..
-            </summary>
-        </member>
         <member name="T:Domain.Repositorios.IItemRepository">
             <summary>
             Repositório de itens
@@ -64,13 +59,13 @@
             que implementa a interface IUnitOfWork
             </summary>
         </member>
-        <member name="M:Domain.Repositorios.IItemRepository.ObterTodos">
+        <member name="M:Domain.Repositorios.IItemRepository.Obter">
             <summary>
             Obtém todos os itens cadastrados
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Domain.Repositorios.IItemRepository.ObterPorId(System.String)">
+        <member name="M:Domain.Repositorios.IItemRepository.Obter(System.String)">
             <summary>
             Tenta obter um item através de sua chave
             </summary>

@@ -135,7 +135,4 @@
   <data name="ItemErrorValueMaxSize" xml:space="preserve">
     <value>Valor muito grande</value>
   </data>
-  <data name="UnexpectedError" xml:space="preserve">
-    <value>Ocorreu um erro inesperado, por favor tente novamente. Se o erro persistir, entre em contato com o administrador do sistema.</value>
-  </data>
 </root>
