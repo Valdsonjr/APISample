@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -66,7 +67,8 @@ namespace Api
                 options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             })
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ItemValidator>())
-            .AddNewtonsoftJson()
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.Converters.Add(new StringEnumConverter()))
             .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddLogging(conf => conf.AddConsole());
@@ -92,6 +94,8 @@ namespace Api
                 services.AddStagingServices();
 
             services.AddServices();
+
+            services.AddHealthChecks();
 
             services.AddApiVersioning(c => c.ReportApiVersions = true);
             services.AddVersionedApiExplorer(c =>

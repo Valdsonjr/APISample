@@ -12,4 +12,4 @@
 - [ ] Add test project
 - [ ] Add authentication
 - [ ] Add rate limit and throttling
-- [ ] Add Health checks
+- [x] Add Health checks
