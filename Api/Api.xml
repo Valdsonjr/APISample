@@ -4,22 +4,6 @@
         <name>Api</name>
     </assembly>
     <members>
-        <member name="T:Api.ConfigureSwaggerOptions">
-            <summary>
-            Configures the Swagger generation options.
-            </summary>
-            <remarks>This allows API versioning to define a Swagger document per API version after the
-            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
-        </member>
-        <member name="M:Api.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Api.ConfigureSwaggerOptions"/> class.
-            </summary>
-            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
-        </member>
-        <member name="M:Api.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
-            <inheritdoc />
-        </member>
         <member name="T:Api.Extensions.DevelopmentExtensions">
             <summary>
             Classe de extensões específicas para ambiente de desenvolvimento
@@ -28,6 +12,23 @@
         <member name="M:Api.Extensions.DevelopmentExtensions.AddDevelopmentServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Adiciona os repositórios de mock na injeção de dependência
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Api.Extensions.DevelopmentExtensions.AddDevelopmentLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona os serviços de logging específicos para desenvolvimento
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Api.Extensions.LocalizationExtentions">
+            <summary>
+            Extensões para localização
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.LocalizationExtentions.AddCustomLocalization(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuração básica de localização
             </summary>
             <param name="services"></param>
         </member>
@@ -53,19 +54,46 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="T:Api.SwaggerDefaultValues">
+        <member name="T:Api.Extensions.Swagger.ConfigureSwaggerOptions">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+        </member>
+        <member name="M:Api.Extensions.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Api.Extensions.Swagger.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        </member>
+        <member name="M:Api.Extensions.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:Api.Extensions.Swagger.SwaggerDefaultValues">
             <summary>
             Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
             </summary>
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
         </member>
-        <member name="M:Api.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+        <member name="M:Api.Extensions.Swagger.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
             <summary>
             Applies the filter to the specified operation using the given context.
             </summary>
             <param name="operation">The operation to apply the filter to.</param>
             <param name="context">The current operation filter context.</param>
+        </member>
+        <member name="T:Api.Extensions.VersioningExtensions">
+            <summary>
+            Extensões de versionamento
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.VersioningExtensions.AddCustomVersioning(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuração básica de versionamento
+            </summary>
+            <param name="services"></param>
         </member>
         <member name="T:Api.V0.Controllers.HealthController">
             <summary>

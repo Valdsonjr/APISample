@@ -10,7 +10,7 @@ using System.Linq;
  * https://dejanstojanovic.net/aspnet/2019/april/localization-of-the-dtos-in-a-separate-assembly-in-aspnet-core/
  */
 
-namespace Api
+namespace Api.Extensions.Swagger
 {
 #pragma warning disable CS1591 // O comentário XML ausente não foi encontrado para o tipo ou membro visível publicamente
     public class SwaggerLanguageHeader : IOperationFilter

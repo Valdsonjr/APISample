@@ -8,7 +8,7 @@ using System.Linq;
  * https://github.com/microsoft/aspnet-api-versioning
  */
 
-namespace Api
+namespace Api.Extensions.Swagger
 {
     /// <summary>
     /// Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.

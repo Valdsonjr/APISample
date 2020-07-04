@@ -11,7 +11,7 @@ using System;
  * https://github.com/microsoft/aspnet-api-versioning
  */
 
-namespace Api
+namespace Api.Extensions.Swagger
 {
     /// <summary>
     /// Configures the Swagger generation options.

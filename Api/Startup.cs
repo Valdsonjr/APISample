@@ -1,11 +1,11 @@
 using Api.Extensions;
-using Domain.Validadores;
+using Api.Extensions.Swagger;
+using Domain.UnitOfWork;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -14,14 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Converters;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Api
@@ -40,9 +34,8 @@ namespace Api
 
         /* JSONPatch ainda usa o newtonsoft e não sabemos quando vai deixar de usar, vide:
          * https://github.com/dotnet/aspnetcore/issues/16968
-         * mas assim que possível, remover essa função e o .AddNewtonsoftJson()
-         * lá embaixo.
-        */ 
+         * mas assim que possível, remover essa função
+        */
         private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
         {
             var builder = new ServiceCollection()
@@ -66,55 +59,30 @@ namespace Api
             {
                 options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             })
-            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ItemValidator>())
-            .AddNewtonsoftJson(options =>
-                options.SerializerSettings.Converters.Add(new StringEnumConverter()))
+            .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>())
             .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddLogging(conf => conf.AddConsole());
-            services.AddLocalization();
-            services.Configure<RequestLocalizationOptions>(
-                opts =>
-                {
-                    var supportedCultures = new List<CultureInfo>
-                    {
-                        new CultureInfo("pt-br"),
-                        new CultureInfo("en-us")
-                    };
-
-                    opts.DefaultRequestCulture = new RequestCulture("pt-br", "pt-br");
-                    opts.SupportedCultures = supportedCultures;
-                    opts.SupportedUICultures = supportedCultures;
-                });
+            services.AddCustomLocalization();
 
             if (Environment.IsDevelopment())
+            {
+                services.AddDevelopmentLogging();
                 services.AddDevelopmentServices();
+            }
 
             if (Environment.IsStaging() || Environment.IsProduction())
+            {
                 services.AddStagingServices();
+            }
 
             services.AddServices();
 
             services.AddHealthChecks();
 
-            services.AddApiVersioning(c => c.ReportApiVersions = true);
-            services.AddVersionedApiExplorer(c =>
-            {
-                c.GroupNameFormat = "'v'VVV";
-                c.SubstituteApiVersionInUrl = true;
-            });
+            services.AddCustomVersioning();
 
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.OperationFilter<SwaggerDefaultValues>();
-                c.OperationFilter<SwaggerLanguageHeader>();
-                var apiXML = Path.Combine(AppContext.BaseDirectory, $"Api.xml");
-                var domainXML = Path.Combine(AppContext.BaseDirectory, $"Domain.xml");
-                c.IncludeXmlComments(apiXML, true);
-                c.AddFluentValidationRules();
-            });
+            services.AddCustomSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
