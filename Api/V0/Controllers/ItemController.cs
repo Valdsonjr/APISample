@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
-using System;
 using System.Collections.Generic;
 
 namespace V0.Api.Controllers
@@ -21,21 +20,17 @@ namespace V0.Api.Controllers
     {
         private readonly ILogger<ItemController> _logger;
         private readonly ItemService _service;
-        private readonly ItemValidator _validator;
 
         /// <summary>
         /// Construtor
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="service"></param>
-        /// <param name="validator"></param>
         public ItemController(ILogger<ItemController> logger,
-                                ItemService service,
-                                ItemValidator validator)
+                                ItemService service)
         {
             _logger = logger;
             _service = service;
-            _validator = validator;
         }
 
         /// <summary>
@@ -61,7 +56,7 @@ namespace V0.Api.Controllers
         /// <response code="200">Todos os itens cadastrados</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Item>), StatusCodes.Status200OK)]
-        public IEnumerable<Item> GetAll()
+        public IEnumerable<Item> Get()
         {
             _logger.LogTrace("ItemController.GetAll() : ENTRYPOINT");
             var result = _service.ObterTodos();
@@ -112,6 +107,7 @@ namespace V0.Api.Controllers
         /// </summary>
         /// <param name="key">chave do item para ser alterado</param>
         /// <param name="patches">alterações</param>
+        /// <param name="validator">validador de itens</param>
         /// <response code="200">Item alterado com sucesso</response>
         /// <response code="400">Erros de validação</response>
         /// <response code="404">Item não encontrado</response>
@@ -119,7 +115,9 @@ namespace V0.Api.Controllers
         [ProducesResponseType(typeof(Item), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public ActionResult Patch(string key, [FromBody] JsonPatchDocument<Item> patches)
+        public ActionResult Patch(string key, 
+            [FromBody] JsonPatchDocument<Item> patches, 
+            [FromServices] ItemValidator validator)
         {
             _logger.LogTrace("ItemController.Patch({key}) : ENTRYPOINT", key);
             var item = _service.ObterPorId(key);
@@ -129,7 +127,7 @@ namespace V0.Api.Controllers
 
             patches.ApplyTo(item);
 
-            var validation = _validator.Validate(item);
+            var validation = validator.Validate(item);
 
             if (!validation.IsValid)
                 return BadRequest(validation);
