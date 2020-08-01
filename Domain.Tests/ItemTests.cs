@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Domain.Tests
@@ -8,7 +7,7 @@ namespace Domain.Tests
         [Fact]
         public void ItemValidationTests()
         {
-
+            Assert.True(false, "Ainda não implementado");
         }
     }
 }

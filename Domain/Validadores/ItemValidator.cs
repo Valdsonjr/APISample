@@ -1,4 +1,5 @@
 ﻿using Domain.Recursos;
+using Domain.Repositorios;
 using Domain.Tipos;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
@@ -24,15 +25,24 @@ namespace Domain.Validadores
         /// <summary>
         /// Construtor
         /// </summary>
-        public ItemValidator(IStringLocalizer<ErrorMessages> localizer)
+        public ItemValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository)
         {
-            RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
-                               .MaximumLength(KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
+            RuleSet("Common", () => 
+            {
+                RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
+                                   .MaximumLength(KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
 
-            RuleFor(i => i.Value).NotEmpty().WithMessage(localizer["ItemErrorEmptyValue"])
-                                 .MaximumLength(ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
+                RuleFor(i => i.Value).NotEmpty().WithMessage(localizer["ItemErrorEmptyValue"])
+                                     .MaximumLength(ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
 
-            RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
+                RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
+            });
+
+            RuleSet("Post", () =>
+            {
+                RuleFor(i => i.Key).Must(i => repository.Obter(i) == null)
+                                   .WithMessage(localizer["ItemErrorAlreadyExists"]);
+            });
         }
     }
 }

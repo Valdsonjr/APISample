@@ -141,17 +141,7 @@
             Tamanho máximo de um valor
             </summary>
         </member>
-        <member name="M:Domain.Validadores.ItemValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Recursos.ErrorMessages})">
-            <summary>
-            Construtor
-            </summary>
-        </member>
-        <member name="T:Domain.Validadores.PostItemValidator">
-            <summary>
-            Validação de inserção de item
-            </summary>
-        </member>
-        <member name="M:Domain.Validadores.PostItemValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Recursos.ErrorMessages},Domain.Repositorios.IItemRepository)">
+        <member name="M:Domain.Validadores.ItemValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Recursos.ErrorMessages},Domain.Repositorios.IItemRepository)">
             <summary>
             Construtor
             </summary>

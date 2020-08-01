@@ -29,7 +29,7 @@ namespace Data.Mock.Repositorios
 
         void IUnitOfWork.Commit()
         {
-            return;
+            // Nada é commitado no repositório de mocks
         }
 
         bool IItemRepository.Inserir(Item item)
