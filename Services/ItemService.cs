@@ -2,6 +2,7 @@
 using Domain.Tipos;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services
 {
@@ -16,21 +17,21 @@ namespace Services
 
         public Item? ObterPorId(String key) => itemRepository.Obter(key);
         public IQueryable<Item> ObterTodos() => itemRepository.Obter();
-        public void Inserir(Item item)
+        public async Task Inserir(Item item)
         {
             itemRepository.Inserir(item);
-            itemRepository.Commit();
+            await itemRepository.Commit();
         }
-        public bool Remover(String key)
+        public async Task<bool> Remover(String key)
         {
             var res = itemRepository.Remover(key);
-            itemRepository.Commit();
+            await itemRepository.Commit();
             return res;
         }
-        public bool Alterar(Item item)
+        public async Task<bool> Alterar(Item item)
         { 
             var res = itemRepository.Alterar(item);
-            itemRepository.Commit();
+            await itemRepository.Commit();
             return res;
         } 
     }

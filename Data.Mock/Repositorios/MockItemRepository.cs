@@ -3,6 +3,7 @@ using Domain.Tipos;
 using Domain.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Mock.Repositorios
 {
@@ -27,10 +28,8 @@ namespace Data.Mock.Repositorios
             _data = data;
         }
 
-        void IUnitOfWork.Commit()
-        {
-            // Nada é commitado no repositório de mocks
-        }
+        Task IUnitOfWork.Commit()
+            => Task.CompletedTask;
 
         bool IItemRepository.Inserir(Item item)
             => !_data.Exists(i => i.Key == item.Key);

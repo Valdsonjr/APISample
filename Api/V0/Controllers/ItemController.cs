@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace V0.Api.Controllers
 {
@@ -74,10 +75,10 @@ namespace V0.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Item), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedAtActionResult Post([CustomizeValidator(RuleSet = "Common,Post")]Item item)
+        public async Task<CreatedAtActionResult> Post([CustomizeValidator(RuleSet = "Common,Post")]Item item)
         {
             _logger.LogTrace("ItemController.Post({dto}) : ENTRYPOINT", item);
-            _service.Inserir(item);
+            await _service.Inserir(item);
             var result = new CreatedAtActionResult(nameof(Get), "Item", new { version = "0.1", key = item.Key }, item);
             _logger.LogTrace("ItemController.Post({result}) : EXITPOINT - SUCCESS", item);
             return result;
@@ -92,12 +93,12 @@ namespace V0.Api.Controllers
         [HttpDelete("{key}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public ActionResult Delete(string key)
+        public async Task<ActionResult> Delete(string key)
         {
             _logger.LogTrace("ItemController.Delete({key}) : ENTRYPOINT", key);
 
-            var result = _service.Remover(key) ? (ActionResult) NoContent() 
-                                               : NotFound();
+            var result = await _service.Remover(key) ? (ActionResult) NoContent() 
+                                                     : NotFound();
 
             _logger.LogTrace("ItemController.Delete({key}) : EXITPOINT - SUCCESS", key);
             return result;
@@ -116,7 +117,7 @@ namespace V0.Api.Controllers
         [ProducesResponseType(typeof(Item), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public ActionResult Patch(string key, 
+        public async Task<ActionResult> Patch(string key, 
             [FromBody] JsonPatchDocument<Item> patches, 
             [FromServices] ItemValidator validator)
         {
@@ -133,7 +134,7 @@ namespace V0.Api.Controllers
             if (!validation.IsValid)
                 return BadRequest(validation);
 
-            _service.Alterar(item);
+            await _service.Alterar(item);
 
             _logger.LogTrace("ItemController.Patch({key}) : EXITPOINT - SUCCESS", key);
             return Ok(item);

@@ -4,6 +4,7 @@ using Domain.Repositorios;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Domain.UnitOfWork;
+using System.Threading.Tasks;
 
 namespace Data.EFCore.Repositorios
 {
@@ -21,8 +22,8 @@ namespace Data.EFCore.Repositorios
             return true;
         } 
 
-        void IUnitOfWork.Commit()
-            => context.SaveChanges();
+        Task IUnitOfWork.Commit()
+            => context.SaveChangesAsync();
 
         bool IItemRepository.Inserir(Item item)
         {

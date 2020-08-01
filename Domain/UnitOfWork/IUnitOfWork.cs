@@ -1,4 +1,6 @@
-﻿namespace Domain.UnitOfWork
+﻿using System.Threading.Tasks;
+
+namespace Domain.UnitOfWork
 {
     /// <summary>
     /// Interface genérica de unidades de trabalho
@@ -11,6 +13,6 @@
         /// "Salva a transação", note que essa operação pode significar coisas bem diferentes para repositórios diferentes
         /// </summary>
         /// <returns></returns>
-        public void Commit();
+        public Task Commit();
     }
 }
