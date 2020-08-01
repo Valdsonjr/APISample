@@ -46,7 +46,7 @@ namespace Api.Extensions.Swagger
                 Title = "Minha API",
                 Version = description.ApiVersion.ToString(),
                 Description = "Um exemplo de API com Swagger, Swashbuckle, JSONPatch, versionamento e localização.",
-                Contact = new OpenApiContact() { Name = "Valdson Francisco" },
+                Contact = new OpenApiContact() { Name = "Valdson Francisco", Email = "valdsonfrancisco.jr@gmail.com", Url = new Uri("https://github.com/Valdsonjr") },
                 License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
             };
 

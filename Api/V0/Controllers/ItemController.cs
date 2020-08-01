@@ -1,6 +1,5 @@
 ﻿using Domain.Tipos;
 using Domain.Validadores;
-using FluentValidation.Attributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -73,7 +72,7 @@ namespace V0.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(Item), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedAtActionResult Post([Validator(typeof(PostItemValidator))] Item item)
+        public CreatedAtActionResult Post(Item item)
         {
             _logger.LogTrace("ItemController.Post({dto}) : ENTRYPOINT", item);
             _service.Inserir(item);

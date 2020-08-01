@@ -1,14 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IO;
 
 namespace Api.Extensions.Swagger
 {
+    /// <summary>
+    /// Extensões do SwaggerGen
+    /// </summary>
     public static class SwaggerGenExtensions
     {
+        /// <summary>
+        /// Configuração básica do SwaggerGen
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddCustomSwaggerGen(this IServiceCollection services)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
@@ -17,10 +23,8 @@ namespace Api.Extensions.Swagger
             {
                 c.OperationFilter<SwaggerDefaultValues>();
                 c.OperationFilter<SwaggerLanguageHeader>();
-                var apiXML = Path.Combine(AppContext.BaseDirectory, $"Api.xml");
-                var domainXML = Path.Combine(AppContext.BaseDirectory, $"Domain.xml");
-                c.IncludeXmlComments(apiXML, true);
-                c.AddFluentValidationRules();
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Api.xml"), true);
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Domain.xml"));
             });
         }
     }

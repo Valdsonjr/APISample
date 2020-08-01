@@ -84,6 +84,17 @@
             <param name="operation">The operation to apply the filter to.</param>
             <param name="context">The current operation filter context.</param>
         </member>
+        <member name="T:Api.Extensions.Swagger.SwaggerGenExtensions">
+            <summary>
+            Extensões do SwaggerGen
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.Swagger.SwaggerGenExtensions.AddCustomSwaggerGen(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuração básica do SwaggerGen
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="T:Api.Extensions.VersioningExtensions">
             <summary>
             Extensões de versionamento

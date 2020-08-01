@@ -8,14 +8,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System.Linq;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
 using System.Threading.Tasks;
 
 namespace Api
@@ -32,36 +29,19 @@ namespace Api
             Environment = env;
         }
 
-        /* JSONPatch ainda usa o newtonsoft e não sabemos quando vai deixar de usar, vide:
-         * https://github.com/dotnet/aspnetcore/issues/16968
-         * mas assim que possível, remover essa função
-        */
-        private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
-        {
-            var builder = new ServiceCollection()
-                .AddLogging()
-                .AddMvc()
-                .AddNewtonsoftJson()
-                .Services.BuildServiceProvider();
-
-            return builder
-                .GetRequiredService<IOptions<MvcOptions>>()
-                .Value
-                .InputFormatters
-                .OfType<NewtonsoftJsonPatchInputFormatter>()
-                .First();
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
-            {
-                options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
-            })
-            .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
-            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>())
-            .SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddControllers()
+                    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>())
+
+                    /* JSONPatch ainda usa o newtonsoft e não sabemos quando vai deixar de usar, vide:
+                     * https://github.com/dotnet/aspnetcore/issues/16968
+                     * mas assim que possível, remover essa chamada
+                    */
+                    .AddNewtonsoftJson(opts => opts.SerializerSettings.Converters.Add(new StringEnumConverter()))
+
+                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddCustomLocalization();
 
