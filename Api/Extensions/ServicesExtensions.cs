@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Api.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Services;
 
 namespace Api.Extensions
@@ -14,7 +15,12 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ItemService>();
+            services.AddScoped<ItemService>()
+                    .AddTransient<Monitoring>()
+                    .AddMvc(options =>
+                    {
+                        options.Filters.AddService<Monitoring>();
+                    });
         }
     }
 }

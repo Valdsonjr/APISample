@@ -5,7 +5,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,18 +19,14 @@ namespace V0.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ItemController : ControllerBase
     {
-        private readonly ILogger<ItemController> _logger;
         private readonly ItemService _service;
 
         /// <summary>
         /// Construtor
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="service"></param>
-        public ItemController(ILogger<ItemController> logger,
-                                ItemService service)
+        public ItemController(ItemService service)
         {
-            _logger = logger;
             _service = service;
         }
 
@@ -46,9 +41,7 @@ namespace V0.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public ActionResult<Item> Get(string key)
         {
-            _logger.LogTrace("ItemController.Get({key}) : ENTRYPOINT", key);
             var result = _service.Obter(key);
-            _logger.LogTrace("ItemController.Get({key}) : EXITPOINT - SUCCESS", result);
             return result != null ? (ActionResult<Item>) Ok(result) : NotFound();
         }
 
@@ -58,13 +51,7 @@ namespace V0.Api.Controllers
         /// <response code="200">Todos os itens cadastrados</response>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Item>), StatusCodes.Status200OK)]
-        public IEnumerable<Item> Get()
-        {
-            _logger.LogTrace("ItemController.GetAll() : ENTRYPOINT");
-            var result = _service.Obter();
-            _logger.LogTrace("ItemController.GetAll() : EXITPOINT - SUCCESS");
-            return result;
-        }
+        public IEnumerable<Item> Get() => _service.Obter();
 
         /// <summary>
         /// Insere um novo item
@@ -77,10 +64,8 @@ namespace V0.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<CreatedAtActionResult> Post([CustomizeValidator(RuleSet = "Common,Post")]Item item)
         {
-            _logger.LogTrace("ItemController.Post({dto}) : ENTRYPOINT", item);
             await _service.Inserir(item);
             var result = new CreatedAtActionResult(nameof(Get), "Item", new { version = "0.1", key = item.Key }, item);
-            _logger.LogTrace("ItemController.Post({result}) : EXITPOINT - SUCCESS", item);
             return result;
         }
 
@@ -93,16 +78,9 @@ namespace V0.Api.Controllers
         [HttpDelete("{key}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Delete(string key)
-        {
-            _logger.LogTrace("ItemController.Delete({key}) : ENTRYPOINT", key);
-
-            var result = await _service.Remover(key) ? (ActionResult) NoContent() 
-                                                     : NotFound();
-
-            _logger.LogTrace("ItemController.Delete({key}) : EXITPOINT - SUCCESS", key);
-            return result;
-        }
+        public async Task<ActionResult> Delete(string key) 
+            => await _service.Remover(key) ? (ActionResult) NoContent() 
+                                           : NotFound();
 
         /// <summary>
         /// Atualiza um item
@@ -121,7 +99,6 @@ namespace V0.Api.Controllers
             [FromBody] JsonPatchDocument<Item> patches, 
             [FromServices] ItemValidator validator)
         {
-            _logger.LogTrace("ItemController.Patch({key}) : ENTRYPOINT", key);
             var item = _service.Obter(key);
 
             if (item == null)
@@ -136,7 +113,6 @@ namespace V0.Api.Controllers
 
             await _service.Alterar(item);
 
-            _logger.LogTrace("ItemController.Patch({key}) : EXITPOINT - SUCCESS", key);
             return Ok(item);
         }
     }

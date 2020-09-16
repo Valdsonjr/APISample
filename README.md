@@ -6,7 +6,7 @@
 - [x] Add controller versioning
 - [ ] Add UnitOfWork pattern
 - [x] Add Global error handling
-- [ ] Add nice reflexive logging features
+- [x] Add nice reflexive logging features (monitoring)
 - [ ] Implement IStringLocalizer using database 
 - [ ] Test alternative architecture with inmemory
 - [ ] Add test project
