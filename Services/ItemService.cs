@@ -15,8 +15,8 @@ namespace Services
             this.itemRepository = itemRepository;
         }
 
-        public Item? ObterPorId(String key) => itemRepository.Obter(key);
-        public IQueryable<Item> ObterTodos() => itemRepository.Obter();
+        public Item? Obter(String key) => itemRepository.Obter(key);
+        public IQueryable<Item> Obter() => itemRepository.Obter();
         public async Task Inserir(Item item)
         {
             itemRepository.Inserir(item);

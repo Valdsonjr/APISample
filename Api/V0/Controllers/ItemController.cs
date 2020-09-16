@@ -47,7 +47,7 @@ namespace V0.Api.Controllers
         public ActionResult<Item> Get(string key)
         {
             _logger.LogTrace("ItemController.Get({key}) : ENTRYPOINT", key);
-            var result = _service.ObterPorId(key);
+            var result = _service.Obter(key);
             _logger.LogTrace("ItemController.Get({key}) : EXITPOINT - SUCCESS", result);
             return result != null ? (ActionResult<Item>) Ok(result) : NotFound();
         }
@@ -61,7 +61,7 @@ namespace V0.Api.Controllers
         public IEnumerable<Item> Get()
         {
             _logger.LogTrace("ItemController.GetAll() : ENTRYPOINT");
-            var result = _service.ObterTodos();
+            var result = _service.Obter();
             _logger.LogTrace("ItemController.GetAll() : EXITPOINT - SUCCESS");
             return result;
         }
@@ -122,7 +122,7 @@ namespace V0.Api.Controllers
             [FromServices] ItemValidator validator)
         {
             _logger.LogTrace("ItemController.Patch({key}) : ENTRYPOINT", key);
-            var item = _service.ObterPorId(key);
+            var item = _service.Obter(key);
 
             if (item == null)
                 return NotFound();

@@ -38,7 +38,7 @@ namespace Data.EFCore.Repositorios
             => context.Find<Item>(key);
 
         IQueryable<Item> IItemRepository.Obter()
-            => context.Items;
+            => context.Items.AsNoTracking();
 
         bool IItemRepository.Remover(string key)
         {
