@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Api.Infrastructure
@@ -10,7 +12,20 @@ namespace Api.Infrastructure
     /// </summary>
     public class Monitoring : IActionFilter
     {
-        private readonly Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch;
+        private MonitoringResult result;
+        private readonly ILogger<Monitoring> log;
+
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="log">logger para monitoramento de endpoints</param>
+        public Monitoring(ILogger<Monitoring> log)
+        {
+            this.log = log;
+            result = new MonitoringResult();
+            stopwatch = new Stopwatch();
+        }
 
         /// <summary>
         /// Ao finalizar a execução
@@ -20,8 +35,10 @@ namespace Api.Infrastructure
         {
             stopwatch.Stop();
 
-            Console.WriteLine("Resultado: {0}", context.Result);
-            Console.WriteLine("Duração: {0}", stopwatch.Elapsed);
+            result.TimeElapsed = stopwatch.Elapsed;
+            result.Result = context.Result.ToString();
+
+            log.LogTrace(JsonConvert.SerializeObject(result, Formatting.Indented));
 
             stopwatch.Reset();
         }
@@ -32,13 +49,23 @@ namespace Api.Infrastructure
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            Console.WriteLine("-------------------------------------------------------------------------------------");
-            Console.WriteLine("Ação: {0}", context.ActionDescriptor.DisplayName);
-            Console.WriteLine("Horário: {0}", DateTime.Now);
-            Console.WriteLine("Parâmetros:");
-            Console.WriteLine(JsonConvert.SerializeObject(context.ActionArguments, Formatting.Indented));
+            result = new MonitoringResult
+            {
+                Action = context.ActionDescriptor.DisplayName,
+                Date = DateTime.UtcNow,
+                Parameters = context.ActionArguments,
+            };
             
             stopwatch.Start();
+        }
+
+        private class MonitoringResult
+        {
+            public string? Action { get; set; }
+            public DateTime Date { get; set; }
+            public IDictionary<string, object>? Parameters { get; set; }
+            public string? Result { get; set; }
+            public TimeSpan TimeElapsed { get; set; }
         }
     }
 }

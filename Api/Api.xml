@@ -111,6 +111,12 @@
             Realiza o monitoramento e log dos endpoints
             </summary>
         </member>
+        <member name="M:Api.Infrastructure.Monitoring.#ctor(Microsoft.Extensions.Logging.ILogger{Api.Infrastructure.Monitoring})">
+            <summary>
+            Construtor
+            </summary>
+            <param name="log">logger para monitoramento de endpoints</param>
+        </member>
         <member name="M:Api.Infrastructure.Monitoring.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
             <summary>
             Ao finalizar a execução
