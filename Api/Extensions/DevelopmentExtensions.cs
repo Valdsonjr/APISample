@@ -16,7 +16,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddDevelopmentServices(this IServiceCollection services)
         {
-            services.AddScoped<IItemRepository, MockItemRepository>();
+            services.AddSingleton<IItemRepository, MockItemRepository>();
         }
 
         /// <summary>
