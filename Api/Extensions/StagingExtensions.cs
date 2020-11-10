@@ -1,5 +1,5 @@
-﻿using Data.EFCore.Repositorios;
-using Domain.Repositorios;
+﻿using Data.EFCore.Repositories;
+using Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Extensions
@@ -15,7 +15,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddStagingServices(this IServiceCollection services)
         {
-            services.AddSingleton<IItemRepository, EFCoreItemRepository>();
+            services.AddScoped<IItemRepository, EFCoreItemRepository>();
         }
     }
 }

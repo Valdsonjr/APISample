@@ -1,5 +1,5 @@
-﻿using Data.Mock.Repositorios;
-using Domain.Repositorios;
+﻿using Data.Mock.Repositories;
+using Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -16,7 +16,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddDevelopmentServices(this IServiceCollection services)
         {
-            services.AddSingleton<IItemRepository, MockItemRepository>();
+            services.AddScoped<IItemRepository, MockItemRepository>();
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddDevelopmentLogging(this IServiceCollection services)
         {
-            services.AddLogging(configure => configure.AddConsole());
+            services.AddLogging(configure => configure.AddConsole(options => options.IncludeScopes = true));
         }
     }
 }

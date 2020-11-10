@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 
 
 /* ESSA CLASSE FOI COPIADA DO LINK ABAIXO, COM ALGUMAS ALTERAÇÕES
@@ -20,42 +19,40 @@ namespace Api.Extensions.Swagger
     /// <see cref="IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        readonly IApiVersionDescriptionProvider provider;
+        private readonly IApiVersionDescriptionProvider _provider;
+        private readonly OpenApiInfo _info;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
         /// </summary>
         /// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
-        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
+        /// <param name="info"></param>
+        public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IOptions<OpenApiInfo> info)
+        {
+            _provider = provider;
+            _info = info.Value;
+        }
 
-        /// <inheritdoc />
-        public void Configure(SwaggerGenOptions options)
+        void IConfigureOptions<SwaggerGenOptions>.Configure(SwaggerGenOptions options)
         {
             // add a swagger document for each discovered API version
             // note: you might choose to skip or document deprecated API versions differently
-            foreach (var description in provider.ApiVersionDescriptions)
+            foreach (var description in _provider.ApiVersionDescriptions)
             {
-                options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
+                options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description, _info));
             }
         }
-
-        static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
+        
+        private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description, OpenApiInfo _info)
         {
-            var info = new OpenApiInfo()
-            {
-                Title = "Minha API",
-                Version = description.ApiVersion.ToString(),
-                Description = "Um exemplo de API com Swagger, Swashbuckle, JSONPatch, versionamento e localização.",
-                Contact = new OpenApiContact() { Name = "Valdson Francisco", Email = "valdsonfrancisco.jr@gmail.com", Url = new Uri("https://github.com/Valdsonjr") },
-                License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
-            };
+            _info.Version = description.ApiVersion.ToString();
 
             if (description.IsDeprecated)
             {
-                info.Description += " Esta versão da API está obsoleta";
+                _info.Description += " This version of the API is obsolete.";
             }
 
-            return info;
+            return _info;
         }
     }
 }

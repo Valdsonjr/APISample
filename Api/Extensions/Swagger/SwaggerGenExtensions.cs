@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IO;
@@ -23,8 +24,15 @@ namespace Api.Extensions.Swagger
             {
                 c.OperationFilter<SwaggerDefaultValues>();
                 c.OperationFilter<SwaggerLanguageHeader>();
+                c.OperationFilter<SwaggerBearerAuthentication>();
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Api.xml"), true);
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Domain.xml"));
+                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http
+                });
             });
         }
     }

@@ -6,22 +6,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-/* Adiciona um header para seleção de linguagem em TODOS os endpoints
- * https://dejanstojanovic.net/aspnet/2019/april/localization-of-the-dtos-in-a-separate-assembly-in-aspnet-core/
- */
 
 namespace Api.Extensions.Swagger
 {
-#pragma warning disable CS1591 // O comentário XML ausente não foi encontrado para o tipo ou membro visível publicamente
+
+    /// <summary>
+    /// Adiciona um header para seleção de linguagem em TODOS os endpoints
+    /// 
+    /// https://dejanstojanovic.net/aspnet/2019/april/localization-of-the-dtos-in-a-separate-assembly-in-aspnet-core/
+    /// </summary>
     public class SwaggerLanguageHeader : IOperationFilter
     {
-        readonly IServiceProvider serviceProvider;
+        readonly IServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="serviceProvider"></param>
         public SwaggerLanguageHeader(IServiceProvider serviceProvider)
         {
-            this.serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        void IOperationFilter.Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null)
                 operation.Parameters = new List<OpenApiParameter>();
@@ -32,16 +39,15 @@ namespace Api.Extensions.Swagger
             {
                 Name = "Accept-Language",
                 In = ParameterLocation.Header,
-                Description = "Linguagens suportadas",
+                Description = "Supported languages",
                 Schema = new OpenApiSchema
                 {
                     Type = "string",
-                    Enum = (serviceProvider.GetService(typeof(IOptions<RequestLocalizationOptions>)) as IOptions<RequestLocalizationOptions>)?
+                    Enum = (_serviceProvider.GetService(typeof(IOptions<RequestLocalizationOptions>)) as IOptions<RequestLocalizationOptions>)?
                         .Value?.SupportedCultures?.Select(c => OpenApiAnyFactory.CreateFor(schema, c.Name)).ToList()
                 },
                 Required = false
             });
         }
     }
-#pragma warning restore CS1591 // O comentário XML ausente não foi encontrado para o tipo ou membro visível publicamente
 }

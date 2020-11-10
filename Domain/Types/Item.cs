@@ -1,10 +1,7 @@
 ﻿using System;
 
-namespace Domain.Tipos
+namespace Domain.Types
 {
-    /// <summary>
-    /// Item de teste da api
-    /// </summary>
     public class Item
     {
         /// <summary>
@@ -19,5 +16,15 @@ namespace Domain.Tipos
         /// Data de criação do item
         /// </summary>
         public DateTime CreationDate { get; protected set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Tamanho máximo de uma chave
+        /// </summary>
+        public static readonly int KeyMaxLength = 100;
+
+        /// <summary>
+        /// Tamanho máximo de um valor
+        /// </summary>
+        public static readonly int ValueMaxLength = 5000;
     }
 }

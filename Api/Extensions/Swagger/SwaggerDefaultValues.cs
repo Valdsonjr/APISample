@@ -17,12 +17,7 @@ namespace Api.Extensions.Swagger
     /// Once they are fixed and published, this class can be removed.</remarks>
     public class SwaggerDefaultValues : IOperationFilter
     {
-        /// <summary>
-        /// Applies the filter to the specified operation using the given context.
-        /// </summary>
-        /// <param name="operation">The operation to apply the filter to.</param>
-        /// <param name="context">The current operation filter context.</param>
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        void IOperationFilter.Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var apiDescription = context.ApiDescription;
 

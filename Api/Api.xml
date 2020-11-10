@@ -4,6 +4,18 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Extensions.ConfigurationExtensions">
+            <summary>
+            Extensões de configuração (IOptions)
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.ConfigurationExtensions.AddConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adiciona algumas classes de configuração para injeção.
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+        </member>
         <member name="T:Api.Extensions.DevelopmentExtensions">
             <summary>
             Classe de extensões específicas para ambiente de desenvolvimento
@@ -18,6 +30,17 @@
         <member name="M:Api.Extensions.DevelopmentExtensions.AddDevelopmentLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Adiciona os serviços de logging específicos para desenvolvimento
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Api.Extensions.HealthCheckExtensions">
+            <summary>
+            Extensões para checagem de saúde da API
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.HealthCheckExtensions.AddCustomHealthChecks(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adiciona as checagens de saúde
             </summary>
             <param name="services"></param>
         </member>
@@ -61,14 +84,17 @@
             <remarks>This allows API versioning to define a Swagger document per API version after the
             <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
         </member>
-        <member name="M:Api.Extensions.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+        <member name="M:Api.Extensions.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider,Microsoft.Extensions.Options.IOptions{Microsoft.OpenApi.Models.OpenApiInfo})">
             <summary>
             Initializes a new instance of the <see cref="T:Api.Extensions.Swagger.ConfigureSwaggerOptions"/> class.
             </summary>
             <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+            <param name="info"></param>
         </member>
-        <member name="M:Api.Extensions.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
-            <inheritdoc />
+        <member name="T:Api.Extensions.Swagger.SwaggerBearerAuthentication">
+            <summary>
+            Filtro para exibição correta por parte do swagger de endpoints que necessitam de autenticação.
+            </summary>
         </member>
         <member name="T:Api.Extensions.Swagger.SwaggerDefaultValues">
             <summary>
@@ -76,13 +102,6 @@
             </summary>
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
-        </member>
-        <member name="M:Api.Extensions.Swagger.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
-            <summary>
-            Applies the filter to the specified operation using the given context.
-            </summary>
-            <param name="operation">The operation to apply the filter to.</param>
-            <param name="context">The current operation filter context.</param>
         </member>
         <member name="T:Api.Extensions.Swagger.SwaggerGenExtensions">
             <summary>
@@ -95,6 +114,19 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:Api.Extensions.Swagger.SwaggerLanguageHeader">
+            <summary>
+            Adiciona um header para seleção de linguagem em TODOS os endpoints
+            
+            https://dejanstojanovic.net/aspnet/2019/april/localization-of-the-dtos-in-a-separate-assembly-in-aspnet-core/
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.Swagger.SwaggerLanguageHeader.#ctor(System.IServiceProvider)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
         <member name="T:Api.Extensions.VersioningExtensions">
             <summary>
             Extensões de versionamento
@@ -105,6 +137,27 @@
             Configuração básica de versionamento
             </summary>
             <param name="services"></param>
+        </member>
+        <member name="T:Api.Infrastructure.DefaultProfile">
+            <summary>
+            Perfil padrão do automapper
+            </summary>
+        </member>
+        <member name="M:Api.Infrastructure.DefaultProfile.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Api.Infrastructure.EFCoreHealthCheck`1">
+            <summary>
+            Health Check genérico para conexões com bancos de dados.
+            </summary>
+        </member>
+        <member name="M:Api.Infrastructure.EFCoreHealthCheck`1.#ctor(`0)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
         </member>
         <member name="T:Api.Infrastructure.Monitoring">
             <summary>
@@ -129,6 +182,29 @@
             </summary>
             <param name="context"></param>
         </member>
+        <member name="T:Api.V0.Controllers.ErrorController">
+            <summary>
+            Controlador de erros da aplicação
+            </summary>
+        </member>
+        <member name="M:Api.V0.Controllers.ErrorController.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages})">
+            <summary>
+            Construtor
+            </summary>
+            <param name="localizer"></param>
+        </member>
+        <member name="M:Api.V0.Controllers.ErrorController.Error">
+            <summary>
+            Endpoint de Erros de produção
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Api.V0.Controllers.ErrorController.ErrorDev">
+            <summary>
+            Endpoint de Erros de desenvolvimento
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Api.V0.Controllers.HealthController">
             <summary>
             Saúde da API
@@ -147,36 +223,89 @@
             <remarks>Provém uma indicação da saúde da API</remarks>
             <response code="200">Relatório de saúde da API</response>
         </member>
+        <member name="T:Api.V0.Models.ItemTO">
+            <summary>
+            Item de teste da api
+            </summary>
+        </member>
+        <member name="P:Api.V0.Models.ItemTO.Key">
+            <summary>
+            Chave de identificação do item
+            </summary>
+        </member>
+        <member name="P:Api.V0.Models.ItemTO.Value">
+            <summary>
+            Texto do item
+            </summary>
+        </member>
+        <member name="P:Api.V0.Models.ItemTO.CreationDate">
+            <summary>
+            Data de criação do item
+            </summary>
+        </member>
+        <member name="T:Api.V0.Queries.ItemQuery">
+            <summary>
+            Consulta de itens
+            </summary>
+        </member>
+        <member name="P:Api.V0.Queries.ItemQuery.Key">
+            <summary>
+            Procura por itens com a chave igual ao valor passado
+            </summary>
+        </member>
+        <member name="P:Api.V0.Queries.ItemQuery.CreationDateInit">
+            <summary>
+            Procura por itens com data de criação maior ou igual ao valor passado
+            </summary>
+        </member>
+        <member name="P:Api.V0.Queries.ItemQuery.CreationDateEnd">
+            <summary>
+            Procura por itens com data de criação menor ou igual ao valor passado
+            </summary>
+        </member>
+        <member name="T:Api.V0.Validators.ItemTOValidator">
+            <summary>
+            Validador de itens
+            </summary>
+        </member>
+        <member name="F:Api.V0.Validators.ItemTOValidator.KeyMaxLength">
+            <summary>
+            Tamanho máximo de uma chave
+            </summary>
+        </member>
+        <member name="F:Api.V0.Validators.ItemTOValidator.ValueMaxLength">
+            <summary>
+            Tamanho máximo de um valor
+            </summary>
+        </member>
+        <member name="M:Api.V0.Validators.ItemTOValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages},Domain.Repositories.IItemRepository)">
+            <summary>
+            Construtor
+            </summary>
+        </member>
         <member name="T:V0.Api.Controllers.ItemController">
             <summary>
             Requisições de gerenciamento de itens
             </summary>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.#ctor(Services.ItemService)">
+        <member name="M:V0.Api.Controllers.ItemController.#ctor(Domain.Services.IItemService,AutoMapper.IMapper)">
             <summary>
             Construtor
             </summary>
             <param name="service"></param>
+            <param name="mapper"></param>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.Get(System.String)">
-            <summary>
-            Obtém um item pela chave
-            </summary>
-            <param name="key">chave de identificação do item</param>
-            <response code="200">Item com a chave especificada</response>
-            <response code="404">Item não encontrado</response>
-        </member>
-        <member name="M:V0.Api.Controllers.ItemController.Get">
+        <member name="M:V0.Api.Controllers.ItemController.Get(Api.V0.Queries.ItemQuery)">
             <summary>
             Obtém todos os itens cadastrados
             </summary>
             <response code="200">Todos os itens cadastrados</response>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.Post(Domain.Tipos.Item)">
+        <member name="M:V0.Api.Controllers.ItemController.Post(Api.V0.Models.ItemTO)">
             <summary>
             Insere um novo item
             </summary>
-            <param name="item"></param>
+            <param name="itemTO"></param>
             <response code="201">Item cadastrado</response>
             <response code="400">Lista de erros de validação</response>
         </member>
@@ -186,18 +315,6 @@
             </summary>
             <param name="key">chave do item para ser removido</param>
             <response code="204">Item removido com sucesso</response>
-            <response code="404">Item não encontrado</response>
-        </member>
-        <member name="M:V0.Api.Controllers.ItemController.Patch(System.String,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Domain.Tipos.Item},Domain.Validadores.ItemValidator)">
-            <summary>
-            Atualiza um item
-            </summary>
-            <param name="key">chave do item para ser alterado</param>
-            <param name="patches">alterações</param>
-            <param name="validator">validador de itens</param>
-            <response code="200">Item alterado com sucesso</response>
-            <response code="400">Erros de validação</response>
-            <response code="404">Item não encontrado</response>
         </member>
     </members>
 </doc>

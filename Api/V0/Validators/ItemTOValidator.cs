@@ -1,16 +1,17 @@
-﻿using Domain.Recursos;
-using Domain.Repositorios;
-using Domain.Tipos;
+﻿using Api.V0.Models;
+using Domain.Repositories;
+using Domain.Resources;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Linq;
 
-namespace Domain.Validadores
+namespace Api.V0.Validators
 {
     /// <summary>
     /// Validador de itens
     /// </summary>
-    public class ItemValidator : AbstractValidator<Item>
+    public class ItemTOValidator : AbstractValidator<ItemTO>
     {
         /// <summary>
         /// Tamanho máximo de uma chave
@@ -25,9 +26,9 @@ namespace Domain.Validadores
         /// <summary>
         /// Construtor
         /// </summary>
-        public ItemValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository)
+        public ItemTOValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository)
         {
-            RuleSet("Common", () => 
+            RuleSet("Common", () =>
             {
                 RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
                                    .MaximumLength(KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
@@ -40,9 +41,10 @@ namespace Domain.Validadores
 
             RuleSet("Post", () =>
             {
-                RuleFor(i => i.Key).Must(i => repository.Obter(i) == null)
+                RuleFor(i => i.Key).Must(key => repository.Obter().FirstOrDefault(i => i.Key == key) == null)
                                    .WithMessage(localizer["ItemErrorAlreadyExists"]);
             });
         }
     }
 }
+

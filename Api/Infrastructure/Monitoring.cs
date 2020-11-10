@@ -12,9 +12,9 @@ namespace Api.Infrastructure
     /// </summary>
     public class Monitoring : IActionFilter
     {
-        private readonly Stopwatch stopwatch;
-        private MonitoringResult result;
-        private readonly ILogger<Monitoring> log;
+        private readonly Stopwatch _stopwatch;
+        private MonitoringResult _result;
+        private readonly ILogger<Monitoring> _log;
 
         /// <summary>
         /// Construtor
@@ -22,9 +22,9 @@ namespace Api.Infrastructure
         /// <param name="log">logger para monitoramento de endpoints</param>
         public Monitoring(ILogger<Monitoring> log)
         {
-            this.log = log;
-            result = new MonitoringResult();
-            stopwatch = new Stopwatch();
+            _log = log;
+            _result = new MonitoringResult();
+            _stopwatch = new Stopwatch();
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace Api.Infrastructure
         /// <param name="context"></param>
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            stopwatch.Stop();
+            _stopwatch.Stop();
 
-            result.TimeElapsed = stopwatch.Elapsed;
-            result.Result = context.Result.ToString();
+            _result.TimeElapsed = _stopwatch.Elapsed;
+            _result.Result = context?.Result?.ToString() ?? "exception";
 
-            log.LogTrace(JsonConvert.SerializeObject(result, Formatting.Indented));
+            _log.LogTrace(JsonConvert.SerializeObject(_result, Formatting.Indented));
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
         }
 
         /// <summary>
@@ -49,14 +49,14 @@ namespace Api.Infrastructure
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            result = new MonitoringResult
+            _result = new MonitoringResult
             {
                 Action = context.ActionDescriptor.DisplayName,
                 Date = DateTime.UtcNow,
                 Parameters = context.ActionArguments,
             };
             
-            stopwatch.Start();
+            _stopwatch.Start();
         }
 
         private class MonitoringResult

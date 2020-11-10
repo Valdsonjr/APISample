@@ -9,7 +9,8 @@ namespace Api.V0.Controllers
     /// Saúde da API
     /// </summary>
     [ApiController]
-    [ApiVersion("0.1")]
+    [ApiVersion("1")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class HealthController : ControllerBase
     {
@@ -31,6 +32,7 @@ namespace Api.V0.Controllers
         /// <response code="200">Relatório de saúde da API</response>
         [HttpGet]
         [ProducesResponseType(typeof(HealthReport), StatusCodes.Status200OK)]
-        public async Task<HealthReport> Get() => await _healthCheckService.CheckHealthAsync();
+        public async Task<HealthReport> Get() => 
+            await _healthCheckService.CheckHealthAsync();
     }
 }

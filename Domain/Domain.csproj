@@ -7,16 +7,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Domain.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Recursos\ErrorMessages.Designer.cs">
+    <Compile Update="Resources\ErrorMessages.Designer.cs">
       <DependentUpon>ErrorMessages.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -24,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Recursos\ErrorMessages.resx">
+    <EmbeddedResource Update="Resources\ErrorMessages.resx">
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>

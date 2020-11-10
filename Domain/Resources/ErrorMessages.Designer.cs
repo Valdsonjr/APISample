@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Domain.Recursos {
+namespace Domain.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Domain.Recursos {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Domain.Recursos.ErrorMessages", typeof(ErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Domain.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Domain.Recursos {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, por favor entre em contato com o administrador do sistema e informe o campo traceId..
+        /// </summary>
+        public static string GlobalError {
+            get {
+                return ResourceManager.GetString("GlobalError", resourceCulture);
             }
         }
         

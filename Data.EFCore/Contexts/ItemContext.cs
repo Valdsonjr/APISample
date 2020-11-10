@@ -1,8 +1,8 @@
-﻿using Domain.Tipos;
+﻿using Domain.Types;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Data.EFCore.Contextos
+namespace Data.EFCore.Contexts
 {
     public class ItemContext : DbContext
     {

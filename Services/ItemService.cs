@@ -1,38 +1,33 @@
-﻿using Domain.Repositorios;
-using Domain.Tipos;
-using System;
+﻿using Domain.Repositories;
+using Domain.Services;
+using Domain.Types;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ItemService
+    public class ItemService : IItemService
     {
-        private readonly IItemRepository itemRepository;
+        private readonly IItemRepository _itemRepository;
 
         public ItemService(IItemRepository itemRepository)
         {
-            this.itemRepository = itemRepository;
+            _itemRepository = itemRepository;
         }
 
-        public Item? Obter(String key) => itemRepository.Obter(key);
-        public IQueryable<Item> Obter() => itemRepository.Obter();
-        public async Task Inserir(Item item)
+        IQueryable<Item> IItemService.Obter()
+            => _itemRepository.Obter();
+
+        Task IItemService.Inserir(Item item)
         {
-            itemRepository.Inserir(item);
-            await itemRepository.Commit();
+            _itemRepository.Inserir(item);
+            return _itemRepository.Commit();
         }
-        public async Task<bool> Remover(String key)
+
+        Task IItemService.Remover(string key)
         {
-            var res = itemRepository.Remover(key);
-            await itemRepository.Commit();
-            return res;
+            _itemRepository.Remover(key);
+            return _itemRepository.Commit();
         }
-        public async Task<bool> Alterar(Item item)
-        { 
-            var res = itemRepository.Alterar(item);
-            await itemRepository.Commit();
-            return res;
-        } 
     }
 }

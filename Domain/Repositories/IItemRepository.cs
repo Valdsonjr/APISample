@@ -1,9 +1,9 @@
-﻿using Domain.Tipos;
+﻿using Domain.Types;
 using Domain.UnitOfWork;
 using System;
 using System.Linq;
 
-namespace Domain.Repositorios
+namespace Domain.Repositories
 {
     /// <summary>
     /// Repositório de itens
@@ -20,12 +20,6 @@ namespace Domain.Repositorios
         /// <returns></returns>
         IQueryable<Item> Obter();
         /// <summary>
-        /// Tenta obter um item através de sua chave
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        Item? Obter(String key);
-        /// <summary>
         /// Tenta inserir um item
         /// </summary>
         /// <param name="item"></param>
@@ -37,11 +31,5 @@ namespace Domain.Repositorios
         /// <param name="key"></param>
         /// <returns></returns>
         Boolean Remover(String key);
-        /// <summary>
-        /// Tenta alterar um item
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        Boolean Alterar(Item item);
     }
 }

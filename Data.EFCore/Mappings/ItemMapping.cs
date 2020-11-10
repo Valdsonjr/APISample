@@ -1,9 +1,8 @@
-﻿using Domain.Tipos;
-using Domain.Validadores;
+﻿using Domain.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Data.EFCore
+namespace Data.EFCore.Mappings
 {
     public class ItemMapping : IEntityTypeConfiguration<Item>
     {
@@ -14,7 +13,7 @@ namespace Data.EFCore
             builder.Property(i => i.Key)
                    .IsRequired()
                    .IsUnicode()
-                   .HasMaxLength(ItemValidator.KeyMaxLength);
+                   .HasMaxLength(Item.KeyMaxLength);
 
             builder.Property(i => i.CreationDate)
                    .IsRequired();
@@ -22,7 +21,7 @@ namespace Data.EFCore
             builder.Property(i => i.Value)
                    .IsRequired()
                    .IsUnicode(true)
-                   .HasMaxLength(ItemValidator.ValueMaxLength);
+                   .HasMaxLength(Item.ValueMaxLength);
         }
     }
 }

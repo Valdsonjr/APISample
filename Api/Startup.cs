@@ -1,19 +1,16 @@
 using Api.Extensions;
 using Api.Extensions.Swagger;
-using Domain.UnitOfWork;
+using AutoMapper;
+using Data.EFCore.Contexts;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Converters;
-using System.Threading.Tasks;
 
 namespace Api
 {
@@ -33,15 +30,11 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>())
-
-                    /* JSONPatch ainda usa o newtonsoft e não sabemos quando vai deixar de usar, vide:
-                     * https://github.com/dotnet/aspnetcore/issues/16968
-                     * mas assim que possível, remover essa chamada
-                    */
-                    .AddNewtonsoftJson(opts => opts.SerializerSettings.Converters.Add(new StringEnumConverter()))
-
+                    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
                     .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddDbContextPool<ItemContext>(options => 
+                options.UseSqlServer(Configuration["ConnectionStrings:ItemDb"]));
 
             services.AddCustomLocalization();
 
@@ -56,34 +49,30 @@ namespace Api
                 services.AddStagingServices();
             }
 
+            services.AddConfiguration(Configuration);
+
             services.AddServices();
 
-            services.AddHealthChecks();
+            services.AddCustomHealthChecks();
 
             services.AddCustomVersioning();
 
             services.AddCustomSwaggerGen();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-                              ILogger<Startup> logger, 
-                              IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             if (Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/api/v1/Error/Development");
             }
-
-            if (Environment.IsProduction()  || Environment.IsStaging())
+            else
             {
                 app.UseResponseCaching();
-                app.UseExceptionHandler(options => options.Run(async context =>
-                {
-                    logger.LogError(context.Features.Get<IExceptionHandlerPathFeature>().Error.Message);
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    await Task.CompletedTask;
-                }));
+                app.UseExceptionHandler("/api/v1/Error/Production");
             }
 
             app.UseSwagger();
