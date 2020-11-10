@@ -1,4 +1,4 @@
-﻿using Api.V0.Models;
+﻿using Api.v0.Models;
 using AutoMapper;
 using Domain.Types;
 

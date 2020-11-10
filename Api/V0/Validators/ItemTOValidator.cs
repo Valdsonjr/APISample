@@ -1,28 +1,19 @@
-﻿using Api.V0.Models;
+﻿using Api.v0.Models;
 using Domain.Repositories;
 using Domain.Resources;
+using Domain.Types;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
 
-namespace Api.V0.Validators
+namespace Api.v0.Validators
 {
     /// <summary>
     /// Validador de itens
     /// </summary>
     public class ItemTOValidator : AbstractValidator<ItemTO>
     {
-        /// <summary>
-        /// Tamanho máximo de uma chave
-        /// </summary>
-        public static readonly int KeyMaxLength = 100;
-
-        /// <summary>
-        /// Tamanho máximo de um valor
-        /// </summary>
-        public static readonly int ValueMaxLength = 5000;
-
         /// <summary>
         /// Construtor
         /// </summary>
@@ -31,10 +22,10 @@ namespace Api.V0.Validators
             RuleSet("Common", () =>
             {
                 RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
-                                   .MaximumLength(KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
+                                   .MaximumLength(Item.KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
 
                 RuleFor(i => i.Value).NotEmpty().WithMessage(localizer["ItemErrorEmptyValue"])
-                                     .MaximumLength(ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
+                                     .MaximumLength(Item.ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
 
                 RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
             });

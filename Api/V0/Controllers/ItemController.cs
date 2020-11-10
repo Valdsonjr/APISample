@@ -1,5 +1,5 @@
-﻿using Api.V0.Models;
-using Api.V0.Queries;
+﻿using Api.v0.Models;
+using Api.v0.Queries;
 using AutoMapper;
 using Domain.Services;
 using Domain.Types;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace V0.Api.Controllers
+namespace Api.v0.Controllers
 {
     /// <summary>
     /// Requisições de gerenciamento de itens

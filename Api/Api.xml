@@ -182,126 +182,66 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="T:Api.V0.Controllers.ErrorController">
+        <member name="T:Api.v0.Controllers.ErrorController">
             <summary>
             Controlador de erros da aplicação
             </summary>
         </member>
-        <member name="M:Api.V0.Controllers.ErrorController.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages})">
+        <member name="M:Api.v0.Controllers.ErrorController.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages})">
             <summary>
             Construtor
             </summary>
             <param name="localizer"></param>
         </member>
-        <member name="M:Api.V0.Controllers.ErrorController.Error">
+        <member name="M:Api.v0.Controllers.ErrorController.Error">
             <summary>
             Endpoint de Erros de produção
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Api.V0.Controllers.ErrorController.ErrorDev">
+        <member name="M:Api.v0.Controllers.ErrorController.ErrorDev">
             <summary>
             Endpoint de Erros de desenvolvimento
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Api.V0.Controllers.HealthController">
+        <member name="T:Api.v0.Controllers.HealthController">
             <summary>
             Saúde da API
             </summary>
         </member>
-        <member name="M:Api.V0.Controllers.HealthController.#ctor(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService)">
+        <member name="M:Api.v0.Controllers.HealthController.#ctor(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService)">
             <summary>
             Construtor
             </summary>
             <param name="healthCheckService"></param>
         </member>
-        <member name="M:Api.V0.Controllers.HealthController.Get">
+        <member name="M:Api.v0.Controllers.HealthController.Get">
             <summary>
             Obtém o status da API
             </summary>
             <remarks>Provém uma indicação da saúde da API</remarks>
             <response code="200">Relatório de saúde da API</response>
         </member>
-        <member name="T:Api.V0.Models.ItemTO">
-            <summary>
-            Item de teste da api
-            </summary>
-        </member>
-        <member name="P:Api.V0.Models.ItemTO.Key">
-            <summary>
-            Chave de identificação do item
-            </summary>
-        </member>
-        <member name="P:Api.V0.Models.ItemTO.Value">
-            <summary>
-            Texto do item
-            </summary>
-        </member>
-        <member name="P:Api.V0.Models.ItemTO.CreationDate">
-            <summary>
-            Data de criação do item
-            </summary>
-        </member>
-        <member name="T:Api.V0.Queries.ItemQuery">
-            <summary>
-            Consulta de itens
-            </summary>
-        </member>
-        <member name="P:Api.V0.Queries.ItemQuery.Key">
-            <summary>
-            Procura por itens com a chave igual ao valor passado
-            </summary>
-        </member>
-        <member name="P:Api.V0.Queries.ItemQuery.CreationDateInit">
-            <summary>
-            Procura por itens com data de criação maior ou igual ao valor passado
-            </summary>
-        </member>
-        <member name="P:Api.V0.Queries.ItemQuery.CreationDateEnd">
-            <summary>
-            Procura por itens com data de criação menor ou igual ao valor passado
-            </summary>
-        </member>
-        <member name="T:Api.V0.Validators.ItemTOValidator">
-            <summary>
-            Validador de itens
-            </summary>
-        </member>
-        <member name="F:Api.V0.Validators.ItemTOValidator.KeyMaxLength">
-            <summary>
-            Tamanho máximo de uma chave
-            </summary>
-        </member>
-        <member name="F:Api.V0.Validators.ItemTOValidator.ValueMaxLength">
-            <summary>
-            Tamanho máximo de um valor
-            </summary>
-        </member>
-        <member name="M:Api.V0.Validators.ItemTOValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages},Domain.Repositories.IItemRepository)">
-            <summary>
-            Construtor
-            </summary>
-        </member>
-        <member name="T:V0.Api.Controllers.ItemController">
+        <member name="T:Api.v0.Controllers.ItemController">
             <summary>
             Requisições de gerenciamento de itens
             </summary>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.#ctor(Domain.Services.IItemService,AutoMapper.IMapper)">
+        <member name="M:Api.v0.Controllers.ItemController.#ctor(Domain.Services.IItemService,AutoMapper.IMapper)">
             <summary>
             Construtor
             </summary>
             <param name="service"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.Get(Api.V0.Queries.ItemQuery)">
+        <member name="M:Api.v0.Controllers.ItemController.Get(Api.v0.Queries.ItemQuery)">
             <summary>
             Obtém todos os itens cadastrados
             </summary>
             <response code="200">Todos os itens cadastrados</response>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.Post(Api.V0.Models.ItemTO)">
+        <member name="M:Api.v0.Controllers.ItemController.Post(Api.v0.Models.ItemTO)">
             <summary>
             Insere um novo item
             </summary>
@@ -309,12 +249,62 @@
             <response code="201">Item cadastrado</response>
             <response code="400">Lista de erros de validação</response>
         </member>
-        <member name="M:V0.Api.Controllers.ItemController.Delete(System.String)">
+        <member name="M:Api.v0.Controllers.ItemController.Delete(System.String)">
             <summary>
             Remove um item
             </summary>
             <param name="key">chave do item para ser removido</param>
             <response code="204">Item removido com sucesso</response>
+        </member>
+        <member name="T:Api.v0.Models.ItemTO">
+            <summary>
+            Item de teste da api
+            </summary>
+        </member>
+        <member name="P:Api.v0.Models.ItemTO.Key">
+            <summary>
+            Chave de identificação do item
+            </summary>
+        </member>
+        <member name="P:Api.v0.Models.ItemTO.Value">
+            <summary>
+            Texto do item
+            </summary>
+        </member>
+        <member name="P:Api.v0.Models.ItemTO.CreationDate">
+            <summary>
+            Data de criação do item
+            </summary>
+        </member>
+        <member name="T:Api.v0.Queries.ItemQuery">
+            <summary>
+            Consulta de itens
+            </summary>
+        </member>
+        <member name="P:Api.v0.Queries.ItemQuery.Key">
+            <summary>
+            Procura por itens com a chave igual ao valor passado
+            </summary>
+        </member>
+        <member name="P:Api.v0.Queries.ItemQuery.CreationDateInit">
+            <summary>
+            Procura por itens com data de criação maior ou igual ao valor passado
+            </summary>
+        </member>
+        <member name="P:Api.v0.Queries.ItemQuery.CreationDateEnd">
+            <summary>
+            Procura por itens com data de criação menor ou igual ao valor passado
+            </summary>
+        </member>
+        <member name="T:Api.v0.Validators.ItemTOValidator">
+            <summary>
+            Validador de itens
+            </summary>
+        </member>
+        <member name="M:Api.v0.Validators.ItemTOValidator.#ctor(Microsoft.Extensions.Localization.IStringLocalizer{Domain.Resources.ErrorMessages},Domain.Repositories.IItemRepository)">
+            <summary>
+            Construtor
+            </summary>
         </member>
     </members>
 </doc>

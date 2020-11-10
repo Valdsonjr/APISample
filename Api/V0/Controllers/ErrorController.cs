@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
-namespace Api.V0.Controllers
+namespace Api.v0.Controllers
 {
     /// <summary>
     /// Controlador de erros da aplicação

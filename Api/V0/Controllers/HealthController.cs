@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading.Tasks;
 
-namespace Api.V0.Controllers
+namespace Api.v0.Controllers
 {
     /// <summary>
     /// Saúde da API

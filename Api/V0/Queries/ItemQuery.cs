@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.V0.Queries
+namespace Api.v0.Queries
 {
     /// <summary>
     /// Consulta de itens

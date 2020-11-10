@@ -1,4 +1,5 @@
 ﻿using Api.Infrastructure;
+using Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
 
@@ -15,7 +16,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ItemService>()
+            services.AddScoped<IItemService, ItemService>()
                     .AddTransient<Monitoring>()
                     .AddMvc(options =>
                     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.V0.Models
+namespace Api.v0.Models
 {
     /// <summary>
     /// Item de teste da api
