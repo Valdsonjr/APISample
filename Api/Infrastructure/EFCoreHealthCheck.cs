@@ -26,13 +26,11 @@ namespace Api.Infrastructure
 
         async Task<HealthCheckResult> IHealthCheck.CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken)
         {
+            var data = new Dictionary<String, Object>();
             try
             {
                 var canConnect = await _context.Database.CanConnectAsync(cancellationToken);
-                var data = new Dictionary<String, Object>
-                {
-                    { "ConnectionString", _context.Database.GetDbConnection().ConnectionString }
-                };
+                data.Add("ConnectionString", _context.Database.GetDbConnection().ConnectionString);
 
                 return canConnect
                     ? HealthCheckResult.Healthy(description: "Connection successful", data: data)
@@ -40,7 +38,11 @@ namespace Api.Infrastructure
             }
             catch (Exception exception)
             {
-                return HealthCheckResult.Unhealthy(description: "Connection unsucessful", exception);
+                // HealthCheckResult.Unhealthy pode receber a exceção como parâmetro
+                // porém o System.Text.JSON ainda não trata ciclos de referências (que existem no objeto da exceção)
+                // portanto nós usamos o stacktrace somente
+                data.Add("stack_trace", exception.StackTrace ?? exception.Message);
+                return HealthCheckResult.Unhealthy(description: "Connection unsucessful", data: data);
             }
         }
 
