@@ -55,6 +55,17 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:Api.Extensions.SerializerExtensions">
+            <summary>
+            Métodos de extensão para configuração da serialização
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.SerializerExtensions.AddCustomJSONOptions(Microsoft.Extensions.DependencyInjection.IMvcBuilder)">
+            <summary>
+            Configuração de serialização de JSON
+            </summary>
+            <param name="mvcBuilder"></param>
+        </member>
         <member name="T:Api.Extensions.ServicesExtensions">
             <summary>
             Extensões de serviços

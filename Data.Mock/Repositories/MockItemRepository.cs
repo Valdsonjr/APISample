@@ -1,6 +1,7 @@
 ﻿using Domain.Repositories;
 using Domain.Types;
 using Domain.UnitOfWork;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,13 +32,13 @@ namespace Data.Mock.Repositories
         Task IUnitOfWork.Commit()
             => Task.CompletedTask;
 
-        bool IItemRepository.Inserir(Item item)
+        Boolean IItemRepository.Inserir(Item item)
             => !_data.Exists(i => i.Key == item.Key);
 
         IQueryable<Item> IItemRepository.Obter()
             => _data.AsQueryable();
 
-        bool IItemRepository.Remover(string key)
+        Boolean IItemRepository.Remover(String key)
             => _data.Exists(i => i.Key == key);
     }
 }

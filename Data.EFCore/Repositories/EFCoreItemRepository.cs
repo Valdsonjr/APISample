@@ -1,9 +1,10 @@
 ﻿using Data.EFCore.Contexts;
-using Domain.Types;
 using Domain.Repositories;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using Domain.Types;
 using Domain.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Data.EFCore.Repositories
@@ -19,7 +20,7 @@ namespace Data.EFCore.Repositories
         Task IUnitOfWork.Commit()
             => _context.SaveChangesAsync();
 
-        bool IItemRepository.Inserir(Item item)
+        Boolean IItemRepository.Inserir(Item item)
         {
             var i = _context.Items.Find(item.Key);
             if (i == null)
@@ -31,7 +32,7 @@ namespace Data.EFCore.Repositories
         IQueryable<Item> IItemRepository.Obter()
             => _context.Items.AsNoTracking();
 
-        bool IItemRepository.Remover(string key)
+        Boolean IItemRepository.Remover(String key)
         {
             var item = _context.Find<Item>(key);
             if (item != null)
