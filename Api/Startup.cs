@@ -31,6 +31,7 @@ namespace Api
         {
             services.AddControllers()
                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+                    .AddCustomJSONOptions()
                     .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddDbContextPool<ItemContext>(options => 
