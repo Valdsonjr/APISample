@@ -28,7 +28,7 @@ namespace Api.Extensions.Swagger
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "bearer"
+                                Id = "JWT Authtentication"
                             }
                         },
                         new List<string>()

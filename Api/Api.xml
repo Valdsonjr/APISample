@@ -4,6 +4,17 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Extensions.AuthenticationExtensions">
+            <summary>
+            Extensões de autenticação
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.AuthenticationExtensions.AddCustomAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configura a autenticação JWT
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="T:Api.Extensions.ConfigurationExtensions">
             <summary>
             Extensões de configuração (IOptions)

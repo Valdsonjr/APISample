@@ -60,6 +60,8 @@ namespace Api
 
             services.AddCustomSwaggerGen();
 
+            services.AddCustomAuthentication();
+
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -93,6 +95,8 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

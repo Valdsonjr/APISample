@@ -26,12 +26,13 @@ namespace Api.Extensions.Swagger
                 c.OperationFilter<SwaggerLanguageHeader>();
                 c.OperationFilter<SwaggerBearerAuthentication>();
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Api.xml"), true);
-                c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("JWT Authtentication", new OpenApiSecurityScheme
                 {
-                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    Description = "Standard Authorization header using the Bearer scheme.",
                     In = ParameterLocation.Header,
                     Name = "Authorization",
-                    Type = SecuritySchemeType.Http
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer"
                 });
             });
         }

@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Services;
 using Domain.Types;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Api.v0.Controllers
     /// <summary>
     /// Requisições de gerenciamento de itens
     /// </summary>
+    [Authorize]
     [ApiController]
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[controller]")]

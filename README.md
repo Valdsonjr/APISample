@@ -10,6 +10,6 @@
 - [ ] Implement IStringLocalizer using database 
 - [ ] Test alternative architecture with inmemory
 - [ ] Add test project
-- [ ] Add authentication
+- [x] Add authentication
 - [ ] Add rate limit and throttling
 - [x] Add Health checks
