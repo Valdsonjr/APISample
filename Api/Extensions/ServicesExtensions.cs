@@ -14,7 +14,7 @@ namespace Api.Extensions
         /// Adiciona os serviços na injeção de dependência
         /// </summary>
         /// <param name="services"></param>
-        public static void AddServices(this IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IItemService, ItemService>()
                     .AddTransient<Monitoring>()
@@ -22,6 +22,8 @@ namespace Api.Extensions
                     {
                         options.Filters.AddService<Monitoring>();
                     });
+
+            return services;
         }
     }
 }

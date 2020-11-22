@@ -15,10 +15,12 @@ namespace Api.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<OpenApiInfo>(configuration.GetSection("Info"));
-            services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionString"));
+            services.Configure<OpenApiInfo>(configuration.GetSection("Info"))
+                    .Configure<ConnectionStrings>(configuration.GetSection("ConnectionString"));
+
+            return services;
         }
     }
 }

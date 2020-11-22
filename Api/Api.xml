@@ -15,6 +15,16 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:Api.Extensions.AutoMapper.DefaultProfile">
+            <summary>
+            Perfil padrão do automapper
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.AutoMapper.DefaultProfile.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
         <member name="T:Api.Extensions.ConfigurationExtensions">
             <summary>
             Extensões de configuração (IOptions)
@@ -54,6 +64,17 @@
             Adiciona as checagens de saúde
             </summary>
             <param name="services"></param>
+        </member>
+        <member name="T:Api.Extensions.HealthCheck.EFCoreHealthCheck`1">
+            <summary>
+            Health Check genérico para conexões com bancos de dados.
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.HealthCheck.EFCoreHealthCheck`1.#ctor(`0)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
         </member>
         <member name="T:Api.Extensions.LocalizationExtentions">
             <summary>
@@ -99,6 +120,17 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:Api.Extensions.SwaggerGenExtensions">
+            <summary>
+            Extensões do SwaggerGen
+            </summary>
+        </member>
+        <member name="M:Api.Extensions.SwaggerGenExtensions.AddCustomSwaggerGen(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuração básica do SwaggerGen
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="T:Api.Extensions.Swagger.ConfigureSwaggerOptions">
             <summary>
             Configures the Swagger generation options.
@@ -125,17 +157,6 @@
             <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
             Once they are fixed and published, this class can be removed.</remarks>
         </member>
-        <member name="T:Api.Extensions.Swagger.SwaggerGenExtensions">
-            <summary>
-            Extensões do SwaggerGen
-            </summary>
-        </member>
-        <member name="M:Api.Extensions.Swagger.SwaggerGenExtensions.AddCustomSwaggerGen(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Configuração básica do SwaggerGen
-            </summary>
-            <param name="services"></param>
-        </member>
         <member name="T:Api.Extensions.Swagger.SwaggerLanguageHeader">
             <summary>
             Adiciona um header para seleção de linguagem em TODOS os endpoints
@@ -159,27 +180,6 @@
             Configuração básica de versionamento
             </summary>
             <param name="services"></param>
-        </member>
-        <member name="T:Api.Infrastructure.DefaultProfile">
-            <summary>
-            Perfil padrão do automapper
-            </summary>
-        </member>
-        <member name="M:Api.Infrastructure.DefaultProfile.#ctor">
-            <summary>
-            Construtor
-            </summary>
-        </member>
-        <member name="T:Api.Infrastructure.EFCoreHealthCheck`1">
-            <summary>
-            Health Check genérico para conexões com bancos de dados.
-            </summary>
-        </member>
-        <member name="M:Api.Infrastructure.EFCoreHealthCheck`1.#ctor(`0)">
-            <summary>
-            Construtor
-            </summary>
-            <param name="context"></param>
         </member>
         <member name="T:Api.Infrastructure.Monitoring">
             <summary>
@@ -277,6 +277,12 @@
             </summary>
             <param name="key">chave do item para ser removido</param>
             <response code="204">Item removido com sucesso</response>
+        </member>
+        <member name="M:Api.v0.Controllers.ItemController.Error">
+            <summary>
+            Teste de erro
+            </summary>
+            <response code="500"></response>
         </member>
         <member name="T:Api.v0.Models.ItemTO">
             <summary>

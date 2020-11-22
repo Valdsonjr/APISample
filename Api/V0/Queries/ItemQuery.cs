@@ -14,22 +14,11 @@ namespace Api.v0.Queries
         /// <summary>
         /// Procura por itens com data de criação maior ou igual ao valor passado
         /// </summary>
-        public DateTime? CreationDateInit
-        {
-            get => creationDateInit;
-            // REF https://github.com/dotnet/aspnetcore/issues/11584
-            set => creationDateInit = value.HasValue ? value.Value.ToUniversalTime() : value;
-        }
-        private DateTime? creationDateInit;
-        private DateTime? creationDateEnd;
+        public DateTime? CreationDateInit { get; set; }
 
         /// <summary>
         /// Procura por itens com data de criação menor ou igual ao valor passado
         /// </summary>
-        public DateTime? CreationDateEnd 
-        { 
-            get => creationDateEnd; 
-            set => creationDateEnd = value.HasValue ? value.Value.ToUniversalTime() : value;
-        }
+        public DateTime? CreationDateEnd { get; set; }
     }
 }

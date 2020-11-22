@@ -11,14 +11,16 @@ namespace Api.Extensions
         /// Configuração básica de versionamento
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCustomVersioning(this IServiceCollection services)
+        public static IServiceCollection AddCustomVersioning(this IServiceCollection services)
         {
-            services.AddApiVersioning(c => c.ReportApiVersions = true);
-            services.AddVersionedApiExplorer(c =>
-            {
-                c.GroupNameFormat = "'v'VVV";
-                c.SubstituteApiVersionInUrl = true;
-            });
+            services.AddApiVersioning(c => c.ReportApiVersions = true)
+                    .AddVersionedApiExplorer(c =>
+                    {
+                        c.GroupNameFormat = "'v'VVV";
+                        c.SubstituteApiVersionInUrl = true;
+                    });
+
+            return services;
         }
     }
 }

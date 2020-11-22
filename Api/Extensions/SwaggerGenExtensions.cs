@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Api.Extensions.Swagger;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IO;
 
-namespace Api.Extensions.Swagger
+namespace Api.Extensions
 {
     /// <summary>
     /// Extensões do SwaggerGen
@@ -16,7 +17,7 @@ namespace Api.Extensions.Swagger
         /// Configuração básica do SwaggerGen
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCustomSwaggerGen(this IServiceCollection services)
+        public static IServiceCollection AddCustomSwaggerGen(this IServiceCollection services)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
@@ -35,6 +36,8 @@ namespace Api.Extensions.Swagger
                     Scheme = "bearer"
                 });
             });
+
+            return services;
         }
     }
 }

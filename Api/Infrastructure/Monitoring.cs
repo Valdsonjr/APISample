@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Api.Infrastructure
 {
@@ -38,7 +38,7 @@ namespace Api.Infrastructure
             _result.TimeElapsed = _stopwatch.Elapsed;
             _result.Result = context?.Result?.ToString() ?? "exception";
 
-            _log.LogTrace(JsonConvert.SerializeObject(_result, Formatting.Indented));
+            _log.LogTrace(JsonSerializer.Serialize(_result, options: new JsonSerializerOptions { WriteIndented = true }));
 
             _stopwatch.Reset();
         }

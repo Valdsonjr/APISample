@@ -14,7 +14,7 @@ namespace Api.Extensions
         /// Configura a autenticação JWT
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCustomAuthentication(this IServiceCollection services)
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
         {
             var key = Environment.GetEnvironmentVariable("JWT_SECRET")
                 ?? throw new InvalidOperationException("Couldn't find JWT_SECRET in your environment variables.");
@@ -34,6 +34,8 @@ namespace Api.Extensions
                  ValidateAudience = false,
                  IssuerSigningKey = new SymmetricSecurityKey(Base64UrlEncoder.DecodeBytes(key))
              });
+
+            return services;
         }
     }
 }

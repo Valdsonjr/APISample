@@ -25,7 +25,7 @@ namespace Api.Extensions
         /// <param name="services"></param>
         public static void AddDevelopmentLogging(this IServiceCollection services)
         {
-            services.AddLogging(configure => configure.AddConsole(options => options.IncludeScopes = true));
+            services.AddLogging(configure => configure.AddSystemdConsole(options => options.IncludeScopes = true));
         }
     }
 }

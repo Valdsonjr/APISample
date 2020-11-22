@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Types;
 
-namespace Api.Infrastructure
+namespace Api.Extensions.AutoMapper
 {
     /// <summary>
     /// Perfil padrão do automapper

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api.Infrastructure
+namespace Api.Extensions.HealthCheck
 {
     /// <summary>
     /// Health Check genérico para conexões com bancos de dados.

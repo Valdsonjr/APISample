@@ -15,7 +15,7 @@ namespace Api.Extensions
         /// Configuração básica de localização
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCustomLocalization(this IServiceCollection services)
+        public static IServiceCollection AddCustomLocalization(this IServiceCollection services)
         {
             services.AddLocalization();
             services.Configure<RequestLocalizationOptions>(opts =>
@@ -30,6 +30,8 @@ namespace Api.Extensions
                 opts.SupportedCultures = supportedCultures;
                 opts.SupportedUICultures = supportedCultures;
             });
+
+            return services;
         }
     }
 }

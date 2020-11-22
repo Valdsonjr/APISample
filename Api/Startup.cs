@@ -1,5 +1,4 @@
 using Api.Extensions;
-using Api.Extensions.Swagger;
 using AutoMapper;
 using Data.EFCore.Contexts;
 using FluentValidation.AspNetCore;
@@ -34,10 +33,16 @@ namespace Api
                     .AddCustomJSONOptions()
                     .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddDbContextPool<ItemContext>(options => 
+            services.AddCustomLocalization()
+                    .AddConfiguration(Configuration)
+                    .AddServices()
+                    .AddCustomHealthChecks()
+                    .AddCustomVersioning()
+                    .AddCustomSwaggerGen()
+                    .AddCustomAuthentication()
+                    .AddAutoMapper(typeof(Startup))
+                    .AddDbContextPool<ItemContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:ItemDb"]));
-
-            services.AddCustomLocalization();
 
             if (Environment.IsDevelopment())
             {
@@ -49,20 +54,6 @@ namespace Api
             {
                 services.AddStagingServices();
             }
-
-            services.AddConfiguration(Configuration);
-
-            services.AddServices();
-
-            services.AddCustomHealthChecks();
-
-            services.AddCustomVersioning();
-
-            services.AddCustomSwaggerGen();
-
-            services.AddCustomAuthentication();
-
-            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,4 @@
-﻿using Api.Infrastructure;
+﻿using Api.Extensions.HealthCheck;
 using Data.EFCore.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,10 +13,12 @@ namespace Api.Extensions
         /// Adiciona as checagens de saúde
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCustomHealthChecks(this IServiceCollection services)
+        public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
         {
             services.AddHealthChecks()
                     .AddCheck<EFCoreHealthCheck<ItemContext>>(nameof(ItemContext));
+
+            return services;
         }
     }
 }
