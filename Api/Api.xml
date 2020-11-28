@@ -278,12 +278,6 @@
             <param name="key">chave do item para ser removido</param>
             <response code="204">Item removido com sucesso</response>
         </member>
-        <member name="M:Api.v0.Controllers.ItemController.Error">
-            <summary>
-            Teste de erro
-            </summary>
-            <response code="500"></response>
-        </member>
         <member name="T:Api.v0.Models.ItemTO">
             <summary>
             Item de teste da api

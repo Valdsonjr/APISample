@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.IO;
@@ -23,11 +24,12 @@ namespace Api.Extensions
 
             services.AddSwaggerGen(c =>
             {
+                c.AddFluentValidationRules();
                 c.OperationFilter<SwaggerDefaultValues>();
                 c.OperationFilter<SwaggerLanguageHeader>();
                 c.OperationFilter<SwaggerBearerAuthentication>();
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"Api.xml"), true);
-                c.AddSecurityDefinition("JWT Authtentication", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("JWT Authentication", new OpenApiSecurityScheme
                 {
                     Description = "Standard Authorization header using the Bearer scheme.",
                     In = ParameterLocation.Header,
