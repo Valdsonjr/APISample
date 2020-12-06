@@ -65,7 +65,6 @@ namespace Api.v0.Controllers
 
             var result = new CreatedAtActionResult(nameof(Get), "Item", new 
             { 
-                version = "1", 
                 key = itemTO.Key 
             }, itemTO);
 

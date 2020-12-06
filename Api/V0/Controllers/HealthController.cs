@@ -9,7 +9,7 @@ namespace Api.v0.Controllers
     /// Saúde da API
     /// </summary>
     [ApiController]
-    [ApiVersion("1")]
+    [ApiVersionNeutral]
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class HealthController : ControllerBase

@@ -9,7 +9,7 @@ namespace Api.v0.Controllers
     /// Controlador de erros da aplicação
     /// </summary>
     [ApiController]
-    [ApiVersion("1")]
+    [ApiVersionNeutral]
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ErrorController : ControllerBase
