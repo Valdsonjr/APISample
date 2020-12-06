@@ -19,20 +19,17 @@ namespace Api.v0.Validators
         /// </summary>
         public ItemTOValidator(IStringLocalizer<ErrorMessages> localizer, IItemRepository repository)
         {
-            RuleSet("Common", () =>
-            {
-                RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
-                                   .MaximumLength(Item.KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
+            RuleFor(i => i.Key).NotEmpty().WithMessage(localizer["ItemErrorEmptyKey"])
+                               .MaximumLength(Item.KeyMaxLength).WithMessage(localizer["ItemErrorKeyMaxSize"]);
 
-                RuleFor(i => i.Value).NotEmpty().WithMessage(localizer["ItemErrorEmptyValue"])
-                                     .MaximumLength(Item.ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
+            RuleFor(i => i.Value).NotEmpty().WithMessage(localizer["ItemErrorEmptyValue"])
+                                 .MaximumLength(Item.ValueMaxLength).WithMessage(localizer["ItemErrorValueMaxSize"]);
 
-                RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
-            });
+            RuleFor(i => i.CreationDate).LessThanOrEqualTo(DateTime.UtcNow).WithMessage(localizer["ItemErrorInvalidDate"]);
 
             RuleSet("Post", () =>
             {
-                RuleFor(i => i.Key).Must(key => repository.Obter().FirstOrDefault(i => i.Key == key) == null)
+                RuleFor(i => i.Key).Must(key => !repository.Obter().Any(i => i.Key == key))
                                    .WithMessage(localizer["ItemErrorAlreadyExists"]);
             });
         }

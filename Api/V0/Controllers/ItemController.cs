@@ -7,7 +7,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,7 +58,7 @@ namespace Api.v0.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ItemTO), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public async Task<CreatedAtActionResult> Post([CustomizeValidator(RuleSet = "Common,Post")]ItemTO itemTO)
+        public async Task<CreatedAtActionResult> Post([CustomizeValidator(RuleSet = "default,Post")]ItemTO itemTO)
         {
             await _service.Inserir(_mapper.Map<Item>(itemTO));
 
